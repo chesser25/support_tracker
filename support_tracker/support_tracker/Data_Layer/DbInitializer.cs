@@ -1,9 +1,9 @@
-﻿using support_issue_tracker.Models;
+﻿using support_tracker.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
 
 
-namespace support_issue_tracker.DbLayer
+namespace support_tracker.DbLayer
 {
     public class DbInitializer : CreateDatabaseIfNotExists<DataContext>
     {

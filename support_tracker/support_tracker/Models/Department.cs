@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace support_issue_tracker.Models
+namespace support_tracker.Models
 {
     public class Department
     {

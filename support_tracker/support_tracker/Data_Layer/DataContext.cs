@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity;
-using support_issue_tracker.Models;
+using support_tracker.Models;
 
-namespace support_issue_tracker.DbLayer
+namespace support_tracker.DbLayer
 {
     public class DataContext : DbContext
     {
