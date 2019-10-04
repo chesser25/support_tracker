@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace support_tracker.Models
 {
@@ -9,6 +10,8 @@ namespace support_tracker.Models
         public string CustomerName { get; set; }
         public string CustomerEmail { get; set; }
         public string Subject { get; set; }
+
+        [DataType(DataType.MultilineText)]
         public string IssueDescription { get; set; }
 
         // Foreign keys 
