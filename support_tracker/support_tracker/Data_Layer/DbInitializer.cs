@@ -5,7 +5,7 @@ using System.Data.Entity;
 
 namespace support_tracker.DbLayer
 {
-    public class DbInitializer : CreateDatabaseIfNotExists<DataContext>
+    public class DbInitializer : DropCreateDatabaseIfModelChanges<DataContext>
     {
         protected override void Seed(DataContext context)
         {
