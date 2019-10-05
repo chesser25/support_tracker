@@ -34,6 +34,7 @@ namespace support_tracker.Infrastructure
         private void AddBindings()
         {
             kernel.Bind<IGenericRepository<Department>>().To<DepartmentsRepository<Department, DbContext>>();
+            kernel.Bind<ITicketsRepository<Ticket>>().To<TicketsRepository<Ticket, DbContext>>();
             kernel.Bind<DbContext>().To<DataContext>().InRequestScope();
         }
     }
