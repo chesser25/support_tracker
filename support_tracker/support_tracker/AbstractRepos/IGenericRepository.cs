@@ -2,7 +2,7 @@
 
 namespace support_tracker.AbstractRepos
 {
-    interface IGenericRepository<T>
+    public interface IGenericRepository<T>
     {
         IEnumerable<T> GetAll();
     }
