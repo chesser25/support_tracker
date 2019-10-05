@@ -35,6 +35,11 @@
                 @Html.EditorFor(model => model.IssueDescription, new { htmlAttributes = new { @class = "form-control", placeholder = "Description" } })
                 @Html.ValidationMessageFor(model => model.IssueDescription, "", new { @class = "text-danger" })
             </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Department)
+                @Html.DropDownListFor(model => model.Department, ViewBag.Departments as SelectList, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+            </div>
             <div class="text-center">
                 <button type="submit" class="btn btn-primary">Save</button>
             </div>

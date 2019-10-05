@@ -16,6 +16,7 @@ namespace support_tracker.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            ViewBag.Departments = new SelectList(this.departmentsRepository.GetAll(), "DepartmentId", "DepartmentName");
             return View();
         }
 
