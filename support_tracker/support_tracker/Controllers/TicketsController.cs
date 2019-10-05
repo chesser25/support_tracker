@@ -25,8 +25,13 @@ namespace support_tracker.Controllers
         [HttpPost]
         public ActionResult Create(Ticket ticket)
         {
-            ticketsRepository.Create(ticket);
-            return View();
+            ViewBag.Departments = new SelectList(this.departmentsRepository.GetAll(), "DepartmentId", "DepartmentName");
+            if (ModelState.IsValid)
+            {
+                ticketsRepository.Create(ticket);
+                return Redirect("/");
+            }
+            return View(ticket);
         }
     }
 }

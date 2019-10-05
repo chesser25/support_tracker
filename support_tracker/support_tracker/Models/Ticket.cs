@@ -1,17 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace support_tracker.Models
 {
     public class Ticket
     {
+        [HiddenInput(DisplayValue = false)]
         public Guid TicketId { get; set; }
+
+        [Required]
+        [Display(Name = "Customer name")]
         public string CustomerName { get; set; }
+
+        [Required]
+        [Display(Name = "Email")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]
         public string CustomerEmail { get; set; }
+
+        [Required]
         public string Subject { get; set; }
 
         [DataType(DataType.MultilineText)]
+        [Required]
+        [Display(Name = "Issue description")]
         public string IssueDescription { get; set; }
 
         // Foreign keys 
