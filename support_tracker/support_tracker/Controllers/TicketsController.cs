@@ -6,11 +6,13 @@ namespace support_tracker.Controllers
 {
     public class TicketsController : Controller
     {
-        private IGenericRepository<Department> departmentsRepository;
+        private readonly IGenericRepository<Department> departmentsRepository;
+        private readonly ITicketsRepository<Ticket> ticketsRepository;
 
-        public TicketsController(IGenericRepository<Department> departmentsRepository)
+        public TicketsController(IGenericRepository<Department> departmentsRepository, ITicketsRepository<Ticket> ticketsRepository)
         {
             this.departmentsRepository = departmentsRepository;
+            this.ticketsRepository = ticketsRepository;
         }
 
         [HttpGet]
@@ -23,6 +25,7 @@ namespace support_tracker.Controllers
         [HttpPost]
         public ActionResult Create(Ticket ticket)
         {
+            ticketsRepository.Create(ticket);
             return View();
         }
     }
