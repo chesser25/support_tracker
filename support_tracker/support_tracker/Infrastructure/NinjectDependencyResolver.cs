@@ -7,10 +7,11 @@ using support_tracker.Models;
 using System.Data.Entity;
 using Ninject.Web.Common;
 using support_tracker.DbLayer;
+using System.Web.Mvc;
 
 namespace support_tracker.Infrastructure
 {
-    public class NinjectDependencyResolver
+    public class NinjectDependencyResolver : IDependencyResolver
     {
         private IKernel kernel;
 
