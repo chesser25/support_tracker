@@ -62,6 +62,9 @@
     <Reference Include="Ninject.Web.Common.WebHost, Version=3.3.1.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.Web.Common.WebHost.3.3.1\lib\net45\Ninject.Web.Common.WebHost.dll</HintPath>
     </Reference>
+    <Reference Include="Rnwood.SmtpServer, Version=2.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rnwood.SmtpServer.2.0.5.1\lib\net20\Rnwood.SmtpServer.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -181,6 +184,7 @@
     <Compile Include="Models\TicketStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\DepartmentsRepository.cs" />
+    <Compile Include="Repositories\TicketsRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
