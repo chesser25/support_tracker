@@ -166,8 +166,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractRepos\IGenericRepository.cs" />
-    <Compile Include="AbstractRepos\ITicketsRepository.cs" />
+    <Compile Include="Abstracts\IGenericRepository.cs" />
+    <Compile Include="Abstracts\IMailer.cs" />
+    <Compile Include="Abstracts\ITicketsRepository.cs" />
     <Compile Include="App_Start\Ninject.Web.Common.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\TicketsController.cs" />

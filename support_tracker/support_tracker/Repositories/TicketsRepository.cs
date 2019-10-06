@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using support_tracker.AbstractRepos;
+using support_tracker.Abstracts;
 
 namespace support_tracker.Repositories
 {

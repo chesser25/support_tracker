@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace support_tracker.AbstractRepos
+namespace support_tracker.Abstracts
 {
     public interface IGenericRepository<T>
     {

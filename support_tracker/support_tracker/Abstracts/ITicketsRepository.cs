@@ -1,6 +1,6 @@
 ﻿using support_tracker.Models;
 
-namespace support_tracker.AbstractRepos
+namespace support_tracker.Abstracts
 {
     public interface ITicketsRepository<T> : IGenericRepository<T>
     {

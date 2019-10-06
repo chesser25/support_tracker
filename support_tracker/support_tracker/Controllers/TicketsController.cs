@@ -1,6 +1,6 @@
 ﻿using support_tracker.Models;
 using System.Web.Mvc;
-using support_tracker.AbstractRepos;
+using support_tracker.Abstracts;
 
 namespace support_tracker.Controllers
 {
