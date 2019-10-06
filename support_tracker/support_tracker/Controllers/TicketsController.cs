@@ -8,11 +8,13 @@ namespace support_tracker.Controllers
     {
         private readonly IGenericRepository<Department> departmentsRepository;
         private readonly ITicketsRepository<Ticket> ticketsRepository;
+        private readonly ITicketsMailer ticketsMailer;
 
-        public TicketsController(IGenericRepository<Department> departmentsRepository, ITicketsRepository<Ticket> ticketsRepository)
+        public TicketsController(IGenericRepository<Department> departmentsRepository, ITicketsRepository<Ticket> ticketsRepository, ITicketsMailer ticketsMailer)
         {
             this.departmentsRepository = departmentsRepository;
             this.ticketsRepository = ticketsRepository;
+            this.ticketsMailer = ticketsMailer;
         }
 
         [HttpGet]
@@ -29,6 +31,7 @@ namespace support_tracker.Controllers
             if (ModelState.IsValid)
             {
                 ticketsRepository.Create(ticket);
+                ticketsMailer.Send(ticket);
                 return Redirect("/");
             }
             return View(ticket);
