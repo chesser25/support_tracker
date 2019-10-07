@@ -70,28 +70,42 @@ namespace support_tracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                StaffMember user = await StaffManager.FindAsync(model.Email, model.Password);
-                if (user == null)
+                var user = await StaffManager.FindAsync(model.Email, model.Password);
+                var foundUserByEmail = await StaffManager.FindByEmailAsync(model.Email);
+                bool isUserExist = false;
+                if (foundUserByEmail != null)
                 {
-                    ModelState.AddModelError("", "Wrong login or password.");
+                    isUserExist = await StaffManager.CheckPasswordAsync(foundUserByEmail, model.Password);
+                }
+                if (user != null)
+                {
+                    return await Authenticate(user);
+                }
+                else if (isUserExist)
+                {
+                    return await Authenticate(foundUserByEmail);
                 }
                 else
                 {
-                    ClaimsIdentity claim = await StaffManager.CreateIdentityAsync(user,
-                                            DefaultAuthenticationTypes.ApplicationCookie);
-                    AuthenticationManager.SignOut();
-                    AuthenticationManager.SignIn(new AuthenticationProperties
-                    {
-                        IsPersistent = true
-                    }, claim);
-                    if (String.IsNullOrEmpty(returnUrl))
-                        return RedirectToAction("Index", "Home");
-                    return Redirect(returnUrl);
+                    ModelState.AddModelError("", "Invalid username or password.");
                 }
             }
             ViewBag.returnUrl = returnUrl;
             return View(model);
         }
+
+        private async Task<ActionResult> Authenticate(StaffMember staffMember)
+        {
+            ClaimsIdentity claim = await StaffManager.CreateIdentityAsync(staffMember,
+                   DefaultAuthenticationTypes.ApplicationCookie);
+            AuthenticationManager.SignOut();
+            AuthenticationManager.SignIn(new AuthenticationProperties
+            {
+                IsPersistent = true
+            }, claim);
+            return Redirect("tickets/get");
+        }
+
         public ActionResult Logout()
         {
             AuthenticationManager.SignOut();
