@@ -38,6 +38,7 @@ namespace support_tracker.Infrastructure
             kernel.Bind<ITicketsRepository<Ticket>>().To<TicketsRepository<Ticket, DbContext>>();
             kernel.Bind<ITicketsMailer>().To<TicketsMailer>();
             kernel.Bind<DbContext>().To<DataContext>().InRequestScope();
+            kernel.Bind<ITicketStatus<TicketStatus>>().To<TicketStatusRepository<TicketStatus, DbContext>>();
         }
     }
 }
