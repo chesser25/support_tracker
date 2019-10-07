@@ -13,6 +13,9 @@ namespace support_tracker.Models
         public override string Email { get; set; }
 
         [Required]
+        public override string UserName { get; set; }
+
+        [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
