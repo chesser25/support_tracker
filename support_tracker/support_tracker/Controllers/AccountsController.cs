@@ -10,7 +10,7 @@ namespace support_tracker.Controllers
 {
     public class AccountsController : Controller
     {
-        private StaffManager UserManager
+        private StaffManager StaffManager
         {
             get
             {
@@ -29,7 +29,7 @@ namespace support_tracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                IdentityResult result = await UserManager.CreateAsync(model, model.Password);
+                IdentityResult result = await StaffManager.CreateAsync(model, model.Password);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Login", "Account");
