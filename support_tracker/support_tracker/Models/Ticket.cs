@@ -37,6 +37,6 @@ namespace support_tracker.Models
         public ICollection<Comment> Comments { get; set; }
 
         public int AdminId { get; set; }
-        public Admin Admin { get; set; }
+        public StaffMember StaffMember { get; set; }
     }
 }
