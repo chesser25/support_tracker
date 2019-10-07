@@ -13,15 +13,8 @@ namespace support_tracker
 {
     public class Startup
     {
-        private DbContext dbContext;
-        public Startup()
-        {
-            dbContext = DependencyResolver.Current.GetService<DbContext>();
-        }
-
         public void Configuration(IAppBuilder app)
         {
-            app.CreatePerOwinContext<DataContext>(() => dbContext as DataContext);
             app.CreatePerOwinContext<StaffManager>(StaffManager.Create);
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
