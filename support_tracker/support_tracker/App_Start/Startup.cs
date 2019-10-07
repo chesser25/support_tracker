@@ -3,9 +3,6 @@ using Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.AspNet.Identity;
 using support_tracker.Auth;
-using support_tracker.DbLayer;
-using System.Data.Entity;
-using System.Web.Mvc;
 
 [assembly: OwinStartup(typeof(support_tracker.Startup))]
 
