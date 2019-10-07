@@ -25,6 +25,7 @@ namespace support_tracker.Repositories
         public virtual void Create(T item)
         {
             dbSet.Add(item);
+            dataContext.SaveChanges();
         }
     }
 }
