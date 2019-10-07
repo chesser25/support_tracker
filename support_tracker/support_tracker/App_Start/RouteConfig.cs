@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace support_tracker
@@ -12,6 +8,24 @@ namespace support_tracker
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            routes.MapRoute(
+               "login",
+               url: "login",
+               defaults: new { controller = "Accounts", action = "Login", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+              "register",
+               url: "register",
+               defaults: new { controller = "Accounts", action = "Register" }
+            );
+
+            routes.MapRoute(
+              "tickets/create",
+              url: "tickets/create",
+              defaults: new { controller = "Tickets", action = "Create" }
+           );
 
             routes.MapRoute(
                 name: "Default",
