@@ -18,6 +18,7 @@ namespace support_tracker.Controllers
             }
         }
 
+        [HttpGet]
         public ActionResult Register()
         {
             return View();
