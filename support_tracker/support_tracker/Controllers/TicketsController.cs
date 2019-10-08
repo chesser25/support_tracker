@@ -41,7 +41,7 @@ namespace support_tracker.Controllers
                 ticket.TicketHash = Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 6);
                 ticket.TicketStatusId = ticketsStatusRepository.GetFirst().TicketStatusId;
                 ticketsRepository.Create(ticket);
-                ticketsMailer.Send(ticket);
+                ticketsMailer.Send(Constants_files.Constants.MAIL_HEADER, string.Format("{0} Ticket id: {1}. Ticket url: {2}", Constants_files.Constants.MAIL_SUBJECT, ticket.TicketHash, Url.Action("GetTicket", "Tickets", new { id = ticket.TicketId }, Request.Url.Scheme)), ticket.CustomerEmail);
                 return Redirect("/");
             }
             return View(ticket);
