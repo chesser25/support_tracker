@@ -6,5 +6,6 @@ namespace support_tracker.Abstracts
     {
         void Create(T ticket);
         T Get(int id);
+        void Update(T ticket);
     }
 }

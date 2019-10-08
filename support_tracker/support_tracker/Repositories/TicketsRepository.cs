@@ -33,5 +33,12 @@ namespace support_tracker.Repositories
         {
             return dbSet.Where(t => t.TicketId == id)?.Include(d => d.Department).Include(s => s.Status).Include(u => u.StaffMember).Include(c => c.Comments).FirstOrDefault();
         }
+
+        public virtual void Update(T ticket)
+        {
+            dbSet.Attach(ticket);
+            dataContext.Entry(ticket).State = EntityState.Modified;
+            dataContext.SaveChanges();
+        }
     }
 }
