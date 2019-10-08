@@ -2,6 +2,10 @@
 using System.Web.Mvc;
 using support_tracker.Abstracts;
 using System;
+using Microsoft.AspNet.Identity;
+using System.Web;
+using support_tracker.Auth;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace support_tracker.Controllers
 {
@@ -55,6 +59,42 @@ namespace support_tracker.Controllers
         {
             var ticket = ticketsRepository.Get(id);
             return View("ShowTicket", ticket);
+        }
+
+        [HttpPost]
+        public PartialViewResult AssignTicket(int id)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                var ticket = ticketsRepository.Get(id);
+                string userId = User.Identity.GetUserId();
+                ticket.StaffMember = StaffManager.FindById(User.Identity.GetUserId());
+                ticketsRepository.Update(ticket);
+                return PartialView("TakeTicketPartial", ticket);
+            }
+            return null;
+        }
+
+        [HttpPost]
+        public PartialViewResult UnassignTicket(int id)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                var ticket = ticketsRepository.Get(id);
+                string userId = User.Identity.GetUserId();
+                ticket.StaffMember = null;
+                ticketsRepository.Update(ticket);
+                return PartialView("TakeTicketPartial", ticket);
+            }
+            return null;
+        }
+
+        private StaffManager StaffManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().GetUserManager<StaffManager>();
+            }
         }
     }
 }
