@@ -30,7 +30,7 @@
                 <td>@ticket.Subject</td>
                 <td>@ticket.Department.DepartmentName</td>
                 <td>@ticket.Status.Status</td>
-                <td><a href="#">Watch</a></td>
+                <td>@Html.ActionLink("Watch", "GetTicket", new { id = ticket.TicketId })</td>
                 <td><a href="#">Take a ticket</a></td>
             </tr>
         }
