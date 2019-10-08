@@ -9,10 +9,17 @@ namespace support_tracker
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+
             routes.MapRoute(
                "tickets/get",
                url: "tickets/get",
                defaults: new { controller = "Tickets", action = "GetTickets" }
+            );
+
+            routes.MapRoute(
+               "tickets/get/id",
+               url: "tickets/get/{id}",
+               defaults: new { controller = "Tickets", action = "GetTicket", id = UrlParameter.Optional }
             );
 
             routes.MapRoute(
