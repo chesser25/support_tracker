@@ -1,11 +1,6 @@
 ﻿using support_tracker.Models;
 using System.Web.Mvc;
 using support_tracker.Abstracts;
-using System;
-using System.Web;
-using Microsoft.AspNet.Identity.Owin;
-using support_tracker.Auth;
-using Microsoft.AspNet.Identity;
 
 namespace support_tracker.Controllers
 {
@@ -24,14 +19,6 @@ namespace support_tracker.Controllers
             this.ticketsStatusRepository = ticketsStatusRepository;
         }
 
-        private StaffManager StaffManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().GetUserManager<StaffManager>();
-            }
-        }
-
         [HttpGet]
         [Authorize]
         public ActionResult Create()
@@ -47,8 +34,6 @@ namespace support_tracker.Controllers
             if (ModelState.IsValid)
             {
                 ticket.TicketStatusId = ticketsStatusRepository.GetFirst().TicketStatusId;
-                StaffMember staffMember = StaffManager.FindById(User.Identity.GetUserId());
-                ticket.StaffMemberId = User.Identity.GetUserId();
                 ticketsRepository.Create(ticket);
                 ticketsMailer.Send(ticket);
                 return Redirect("/");
