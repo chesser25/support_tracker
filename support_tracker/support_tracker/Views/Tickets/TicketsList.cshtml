@@ -11,27 +11,31 @@
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col">Customer Name</th>
-            <th scope="col">Customer Email</th>
-            <th scope="col">Subject</th>
-            <th scope="col">Department</th>
-            <th scope="col">Status</th>
-            <th scope="col" colspan="2">Actions</th>
+            <th scope="col" class="align-middle text-center">#</th>
+            <th scope="col" class="align-middle text-center">Customer Name</th>
+            <th scope="col" class="align-middle text-center">Customer Email</th>
+            <th scope="col" class="align-middle text-center">Subject</th>
+            <th scope="col" class="align-middle text-center">Department</th>
+            <th scope="col" class="align-middle text-center">Status</th>
+            <th scope="col" colspan="2" class="align-middle text-center">Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var ticket in Model)
         {
             <tr>
-                <th scope="row">@ticket.TicketId</th>
-                <td>@ticket.CustomerName</td>
-                <td>@ticket.CustomerEmail</td>
-                <td>@ticket.Subject</td>
-                <td>@ticket.Department.DepartmentName</td>
-                <td>@ticket.Status.Status</td>
-                <td>@Html.ActionLink("Watch", "GetTicket", new { id = ticket.TicketId })</td>
-                <td><a href="#">Take a ticket</a></td>
+                <th scope="row" class="align-middle text-center">@ticket.TicketId</th>
+                <td class="align-middle text-center">@ticket.CustomerName</td>
+                <td class="align-middle text-center">@ticket.CustomerEmail</td>
+                <td class="align-middle text-center">@ticket.Subject</td>
+                <td class="align-middle text-center">@ticket.Department.DepartmentName</td>
+                <td class="align-middle text-center">@ticket.Status.Status</td>
+                <td class="align-middle text-center">@Html.ActionLink("Watch", "GetTicket", new { id = ticket.TicketId }, new { @class = "btn btn-info" })</td>
+                <td class="align-middle text-center" id="ticketPartial-@ticket.TicketId">
+                    @{
+                        Html.RenderPartial("TakeTicketPartial", ticket);
+                    }
+                </td>
             </tr>
         }
     </tbody>
