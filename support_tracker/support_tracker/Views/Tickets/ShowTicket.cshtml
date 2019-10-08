@@ -1,0 +1,56 @@
+﻿@model support_tracker.Models.Ticket
+
+@{
+    ViewBag.Title = "Show Ticket";
+}
+
+<div class="container">
+    <h3 class="font-weight-bold text-center"> Ticket # @Model.TicketHash</h3>
+    <hr />
+    <div class="d-flex flex-row justify-content-center pt-5">
+        <div>
+            <div>
+                Customer name:
+            </div>
+            <div class="pt-2">
+                Customer email:
+            </div>
+            <div class="pt-2">
+                Subject:
+            </div>
+            <div class="pt-2">
+                Issue description:
+            </div>
+            <div class="pt-2">
+                Department:
+            </div>
+            <div class="pt-2">
+                Ticket status:
+            </div>
+        </div>
+        <div class="pl-5">
+            <div>
+                @Model.CustomerName
+            </div>
+            <div class="pt-2">
+                @Model.CustomerEmail
+            </div>
+            <div class="pt-2">
+                @Model.Subject
+            </div>
+            <div class="pt-2">
+                @Model.IssueDescription
+            </div>
+            <div class="pt-2">
+                @Model.Department.DepartmentName
+            </div>
+            <div class="pt-2">
+                @Model.Status.Status
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="text-center pt-5">
+         @Html.ActionLink("Back to the list", "GetTickets")
+    </div>
+</div>
