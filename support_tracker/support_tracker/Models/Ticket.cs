@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Mvc;
 
 namespace support_tracker.Models
@@ -8,7 +9,8 @@ namespace support_tracker.Models
     public class Ticket
     {
         [HiddenInput(DisplayValue = false)]
-        public Guid TicketId { get; set; }
+        [Key]
+        public int TicketId { get; set; }
 
         [Required]
         [Display(Name = "Customer name")]
@@ -36,7 +38,9 @@ namespace support_tracker.Models
 
         public ICollection<Comment> Comments { get; set; }
 
-        //public Guid StaffMemberId { get; set; }
-        //public StaffMember StaffMember { get; set; }
+        public string StaffMemberId { get; set; }
+
+        [ForeignKey("StaffMemberId")]
+        public virtual StaffMember StaffMember { get; set; }
     }
 }
