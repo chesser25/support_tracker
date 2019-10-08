@@ -1,6 +1,7 @@
 ﻿using support_tracker.Models;
 using System.Web.Mvc;
 using support_tracker.Abstracts;
+using System;
 
 namespace support_tracker.Controllers
 {
@@ -33,6 +34,7 @@ namespace support_tracker.Controllers
             ViewBag.Departments = new SelectList(this.departmentsRepository.GetAll(), "DepartmentId", "DepartmentName");
             if (ModelState.IsValid)
             {
+                ticket.TicketHash = Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 6);
                 ticket.TicketStatusId = ticketsStatusRepository.GetFirst().TicketStatusId;
                 ticketsRepository.Create(ticket);
                 ticketsMailer.Send(ticket);
@@ -46,6 +48,13 @@ namespace support_tracker.Controllers
         {
             var tickets = ticketsRepository.GetAll();
             return View("TicketsList", tickets);
+        }
+
+        [HttpGet]
+        public ActionResult GetTicket(int id)
+        {
+            var ticket = ticketsRepository.Get(id);
+            return View("ShowTicket", ticket);
         }
     }
 }

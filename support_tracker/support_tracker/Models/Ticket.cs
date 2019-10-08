@@ -12,6 +12,9 @@ namespace support_tracker.Models
         [Key]
         public int TicketId { get; set; }
 
+        [HiddenInput(DisplayValue = false)]
+        public string TicketHash { get; set; }
+
         [Required]
         [Display(Name = "Customer name")]
         public string CustomerName { get; set; }
