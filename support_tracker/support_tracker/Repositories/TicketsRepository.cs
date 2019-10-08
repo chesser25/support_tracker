@@ -2,11 +2,12 @@
 using System.Data.Entity;
 using System.Linq;
 using support_tracker.Abstracts;
+using support_tracker.Models;
 
 namespace support_tracker.Repositories
 {
     public class TicketsRepository<T,C> : ITicketsRepository<T>
-        where T : class
+        where T: Ticket 
         where C : DbContext
     {
         private C dataContext;
@@ -19,7 +20,7 @@ namespace support_tracker.Repositories
         }
         public virtual IEnumerable<T> GetAll()
         {
-            return dbSet.ToList();
+            return dbSet.Include(d => d.Department).Include(s => s.Status).Include(u => u.StaffMember).Include(c => c.Comments).ToList();
         }
 
         public virtual void Create(T item)
