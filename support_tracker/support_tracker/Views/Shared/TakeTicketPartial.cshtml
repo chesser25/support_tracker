@@ -1,0 +1,25 @@
+﻿@using Microsoft.AspNet.Identity;
+@model support_tracker.Models.Ticket
+
+
+@if (Model.StaffMember == null)
+{
+    using (Ajax.BeginForm("AssignTicket", new { id = Model.TicketId }, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "ticketPartial-" + @Model.TicketId, InsertionMode = InsertionMode.Replace }))
+    {
+        <button type="submit" class="btn btn-success btn-md">Assign</button>
+    }
+}
+else if (Model.StaffMemberId == User.Identity.GetUserId())
+{
+    using (Ajax.BeginForm("UnassignTicket", new { id = Model.TicketId }, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "ticketPartial-" + @Model.TicketId, InsertionMode = InsertionMode.Replace }))
+    {
+        <button type="submit" class="btn btn-danger btn-md">Un-assign</button>
+    }
+}
+else
+{
+    <span> Ticket has already been taken</span>
+}
+
+
+
