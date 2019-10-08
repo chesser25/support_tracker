@@ -46,10 +46,9 @@ namespace support_tracker.Controllers
             ViewBag.Departments = new SelectList(this.departmentsRepository.GetAll(), "DepartmentId", "DepartmentName");
             if (ModelState.IsValid)
             {
-                ticket.TicketId = Guid.NewGuid();
                 ticket.TicketStatusId = ticketsStatusRepository.GetFirst().TicketStatusId;
                 StaffMember staffMember = StaffManager.FindById(User.Identity.GetUserId());
-                staffMember.Tickets.Add(ticket);
+                ticket.StaffMemberId = User.Identity.GetUserId();
                 ticketsRepository.Create(ticket);
                 ticketsMailer.Send(ticket);
                 return Redirect("/");
