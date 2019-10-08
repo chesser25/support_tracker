@@ -6,13 +6,13 @@ namespace support_tracker.Mailer
 {
     public class TicketsMailer : ITicketsMailer
     {
-        public void Send(Ticket ticket)
+        public void Send(string subject, string body, string userEmail)
         {
             SmtpClient smtpClient = new SmtpClient();
             MailMessage mailMessage = new MailMessage();
-            mailMessage.To.Add(new MailAddress(ticket.CustomerEmail));
-            mailMessage.Subject = ticket.Subject;
-            mailMessage.Body = ticket.IssueDescription;
+            mailMessage.To.Add(new MailAddress(userEmail));
+            mailMessage.Subject = subject;
+            mailMessage.Body = body;
             smtpClient.Send(mailMessage);
         }
     }

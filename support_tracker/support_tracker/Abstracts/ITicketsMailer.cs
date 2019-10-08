@@ -4,6 +4,6 @@ namespace support_tracker.Abstracts
 {
     public interface ITicketsMailer
     {
-        void Send(Ticket ticket);
+        void Send(string subject, string body, string userEmail);
     }
 }
