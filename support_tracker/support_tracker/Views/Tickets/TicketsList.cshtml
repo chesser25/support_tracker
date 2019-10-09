@@ -1,4 +1,6 @@
-﻿@model IEnumerable<support_tracker.Models.Ticket>
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<support_tracker.Models.Ticket>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "TicketsList";
@@ -11,7 +13,7 @@
 @using (Html.BeginForm("GetTickets", "Tickets", FormMethod.Get))
 {
     <p>
-        Find by ticket id or subject: @Html.TextBox("SearchString")
+        Find by ticket id or subject: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
         <input type="submit" value="Search" />
     </p>
 }
@@ -20,11 +22,11 @@
     <thead>
         <tr>
             <th scope="col" class="align-middle text-center">#</th>
-            <th scope="col" class="align-middle text-center">@Html.ActionLink("Customer Name", "GetTickets", new { sortOrder = ViewBag.CustomerName })</th>
+            <th scope="col" class="align-middle text-center">@Html.ActionLink("Customer Name", "GetTickets", new { sortOrder = ViewBag.CustomerName, currentFilter = ViewBag.CurrentFilter })</th>
             <th scope="col" class="align-middle text-center">Customer Email</th>
             <th scope="col" class="align-middle text-center">Subject</th>
             <th scope="col" class="align-middle text-center">Department</th>
-            <th scope="col" class="align-middle text-center">@Html.ActionLink("Ticket Status", "GetTickets", new { sortOrder = ViewBag.TicketStatus })</th>
+            <th scope="col" class="align-middle text-center">@Html.ActionLink("Ticket Status", "GetTickets", new { sortOrder = ViewBag.TicketStatus, currentFilter = ViewBag.CurrentFilter })</th>
             <th scope="col" colspan="2" class="align-middle text-center">Actions</th>
         </tr>
     </thead>
@@ -48,3 +50,8 @@
         }
     </tbody>
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("GetTickets",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

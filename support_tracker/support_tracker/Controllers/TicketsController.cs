@@ -8,6 +8,7 @@ using support_tracker.Auth;
 using Microsoft.AspNet.Identity.Owin;
 using System.Collections.Generic;
 using System.Linq;
+using PagedList;
 
 namespace support_tracker.Controllers
 {
@@ -59,10 +60,21 @@ namespace support_tracker.Controllers
         }
 
         [HttpGet]
-        public ViewResult GetTickets(string sortOrder, string searchString)
+        public ViewResult GetTickets(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.CustomerName = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.TicketStatus = sortOrder == "TicketStatus" ? "status_desc" : "TicketStatus";
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
             IEnumerable<Ticket> tickets = ticketsRepository.GetAll();
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -83,7 +95,9 @@ namespace support_tracker.Controllers
                     tickets = tickets.OrderBy(t => t.CustomerName);
                     break;
             }
-            return View("TicketsList", tickets);
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View("TicketsList", tickets.ToPagedList(pageNumber, pageSize));
         }
 
         [HttpGet]
