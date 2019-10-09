@@ -14,6 +14,6 @@ namespace support_tracker.DbLayer
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TicketStatus> TicketStatuses { get; set; }
         public DbSet<Department> Departments { get; set; }
-        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Message> Comments { get; set; }
     }
 }

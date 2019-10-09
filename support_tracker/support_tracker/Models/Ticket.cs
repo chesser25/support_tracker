@@ -39,7 +39,7 @@ namespace support_tracker.Models
         public int DepartmentId { get; set; }
         public Department Department { get; set; }
 
-        public ICollection<Comment> Comments { get; set; }
+        public ICollection<Message> Messages { get; set; }
 
         public string StaffMemberId { get; set; }
 

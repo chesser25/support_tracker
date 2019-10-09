@@ -20,7 +20,7 @@ namespace support_tracker.Repositories
         }
         public virtual IEnumerable<T> GetAll()
         {
-            return dbSet.Include(d => d.Department).Include(s => s.Status).Include(u => u.StaffMember).Include(c => c.Comments).ToList();
+            return dbSet.Include(d => d.Department).Include(s => s.Status).Include(u => u.StaffMember).Include(c => c.Messages).ToList();
         }
 
         public virtual void Create(T item)
@@ -31,7 +31,7 @@ namespace support_tracker.Repositories
 
         public virtual T Get(int? id)
         {
-            return dbSet.Where(t => t.TicketId == id)?.Include(d => d.Department).Include(s => s.Status).Include(u => u.StaffMember).Include(c => c.Comments).FirstOrDefault();
+            return dbSet.Where(t => t.TicketId == id)?.Include(d => d.Department).Include(s => s.Status).Include(u => u.StaffMember).Include(c => c.Messages).FirstOrDefault();
         }
 
         public virtual void Update(T ticket)
