@@ -39,6 +39,7 @@ namespace support_tracker.Infrastructure
             kernel.Bind<ITicketsMailer>().To<TicketsMailer>();
             kernel.Bind<DbContext>().To<DataContext>().InSingletonScope();
             kernel.Bind<ITicketStatus<TicketStatus>>().To<TicketStatusRepository<TicketStatus, DbContext>>();
+            kernel.Bind<IMessageRepository<Message>>().To<MessageRepository<Message, DbContext>>();
         }
     }
 }
