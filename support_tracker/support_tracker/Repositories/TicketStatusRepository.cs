@@ -1,4 +1,5 @@
 ﻿using support_tracker.Abstracts;
+using support_tracker.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Linq;
 namespace support_tracker.Repositories
 {
     public class TicketStatusRepository<T, C> : ITicketStatus<T>
-        where T : class
+        where T : TicketStatus
         where C : DbContext
     {
         private C dataContext;
@@ -25,6 +26,11 @@ namespace support_tracker.Repositories
         public T GetFirst()
         {
             return dbSet.FirstOrDefault<T>();
+        }
+
+        public T GetById(int id)
+        {
+            return dbSet.Where(t => t.TicketStatusId == id).FirstOrDefault();
         }
     }
 }

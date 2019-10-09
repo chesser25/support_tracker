@@ -3,5 +3,6 @@
     public interface ITicketStatus<T>: IGenericRepository<T>
     {
         T GetFirst();
+        T GetById(int id);
     }
 }
