@@ -8,6 +8,14 @@
     <h1>List of all tickets</h1>
 </div>
 
+@using (Html.BeginForm("GetTickets", "Tickets", FormMethod.Get))
+{
+    <p>
+        Find by ticket id or subject: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+}
+
 <table class="table">
     <thead>
         <tr>

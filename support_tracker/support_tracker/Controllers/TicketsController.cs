@@ -59,12 +59,16 @@ namespace support_tracker.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetTickets(string sortOrder)
+        public ViewResult GetTickets(string sortOrder, string searchString)
         {
             ViewBag.CustomerName = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.TicketStatus = sortOrder == "TicketStatus" ? "status_desc" : "TicketStatus";
             IEnumerable<Ticket> tickets = ticketsRepository.GetAll();
-            switch(sortOrder)
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                tickets = tickets.Where(t => t.TicketHash.Contains(searchString) || t.Subject.Contains(searchString));
+            }
+            switch (sortOrder)
             {
                 case "name_desc":
                     tickets = tickets.OrderByDescending(t => t.CustomerName);
