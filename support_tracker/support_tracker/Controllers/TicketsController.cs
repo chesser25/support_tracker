@@ -24,6 +24,15 @@ namespace support_tracker.Controllers
             this.ticketsStatusRepository = ticketsStatusRepository;
         }
 
+
+        private StaffManager StaffManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().GetUserManager<StaffManager>();
+            }
+        }
+
         [HttpGet]
         [Authorize]
         public ActionResult Create()
@@ -57,6 +66,7 @@ namespace support_tracker.Controllers
         [HttpGet]
         public ActionResult GetTicket(int id)
         {
+            ViewBag.Statuses = new SelectList(this.ticketsStatusRepository.GetAll(), "TicketStatusId", "Status");
             var ticket = ticketsRepository.Get(id);
             return View("ShowTicket", ticket);
         }
@@ -67,7 +77,6 @@ namespace support_tracker.Controllers
             if (Request.IsAjaxRequest())
             {
                 var ticket = ticketsRepository.Get(id);
-                string userId = User.Identity.GetUserId();
                 ticket.StaffMember = StaffManager.FindById(User.Identity.GetUserId());
                 ticketsRepository.Update(ticket);
                 return PartialView("TakeTicketPartial", ticket);
@@ -81,7 +90,6 @@ namespace support_tracker.Controllers
             if (Request.IsAjaxRequest())
             {
                 var ticket = ticketsRepository.Get(id);
-                string userId = User.Identity.GetUserId();
                 ticket.StaffMember = null;
                 ticketsRepository.Update(ticket);
                 return PartialView("TakeTicketPartial", ticket);
@@ -89,12 +97,17 @@ namespace support_tracker.Controllers
             return null;
         }
 
-        private StaffManager StaffManager
+        [HttpPost]
+        public PartialViewResult ChangeTicketStatus(Ticket model)
         {
-            get
+            if (Request.IsAjaxRequest())
             {
-                return HttpContext.GetOwinContext().GetUserManager<StaffManager>();
+                var ticket = ticketsRepository.Get(model.TicketId);
+                ticket.Status = ticketsStatusRepository.GetById(model.TicketStatusId);
+                ticketsRepository.Update(ticket);
+                return PartialView("AlertPartial", "success");
             }
+            return null;
         }
     }
 }
