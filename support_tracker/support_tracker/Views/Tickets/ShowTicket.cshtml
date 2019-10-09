@@ -59,6 +59,11 @@
             </div>
         </div>
     </div>
+    <div>
+        @{ 
+            Html.RenderPartial("MessagePartial");
+        }
+    </div>
     <hr />
     <div class="text-center pt-5">
         @Html.ActionLink("Back to the list", "GetTickets")
