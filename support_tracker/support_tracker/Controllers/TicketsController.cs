@@ -6,6 +6,8 @@ using Microsoft.AspNet.Identity;
 using System.Web;
 using support_tracker.Auth;
 using Microsoft.AspNet.Identity.Owin;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace support_tracker.Controllers
 {
@@ -57,9 +59,26 @@ namespace support_tracker.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetTickets()
+        public ActionResult GetTickets(string sortOrder)
         {
-            var tickets = ticketsRepository.GetAll();
+            ViewBag.CustomerName = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.TicketStatus = sortOrder == "TicketStatus" ? "status_desc" : "TicketStatus";
+            IEnumerable<Ticket> tickets = ticketsRepository.GetAll();
+            switch(sortOrder)
+            {
+                case "name_desc":
+                    tickets = tickets.OrderByDescending(t => t.CustomerName);
+                    break;
+                case "TicketStatus":
+                    tickets = tickets.OrderBy(t => t.Status.Status);
+                    break;
+                case "status_desc":
+                    tickets = tickets.OrderByDescending(t => t.Status.Status);
+                    break;
+                default:
+                    tickets = tickets.OrderBy(t => t.CustomerName);
+                    break;
+            }
             return View("TicketsList", tickets);
         }
 

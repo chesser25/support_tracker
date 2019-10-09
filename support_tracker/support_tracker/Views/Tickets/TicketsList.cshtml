@@ -12,11 +12,11 @@
     <thead>
         <tr>
             <th scope="col" class="align-middle text-center">#</th>
-            <th scope="col" class="align-middle text-center">Customer Name</th>
+            <th scope="col" class="align-middle text-center">@Html.ActionLink("Customer Name", "GetTickets", new { sortOrder = ViewBag.CustomerName })</th>
             <th scope="col" class="align-middle text-center">Customer Email</th>
             <th scope="col" class="align-middle text-center">Subject</th>
             <th scope="col" class="align-middle text-center">Department</th>
-            <th scope="col" class="align-middle text-center">Status</th>
+            <th scope="col" class="align-middle text-center">@Html.ActionLink("Ticket Status", "GetTickets", new { sortOrder = ViewBag.TicketStatus })</th>
             <th scope="col" colspan="2" class="align-middle text-center">Actions</th>
         </tr>
     </thead>
