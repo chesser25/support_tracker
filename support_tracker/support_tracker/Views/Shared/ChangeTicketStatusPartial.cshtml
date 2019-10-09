@@ -1,0 +1,9 @@
+﻿@model support_tracker.Models.Ticket
+
+@using (Ajax.BeginForm("ChangeTicketStatus", Model, new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "show-ticket-alert" }))
+{
+    @Html.DropDownListFor(model => model.TicketStatusId, ViewBag.Statuses as SelectList, new { htmlAttributes = new { @class = "form-control" } })
+    <span class="input-group-btn pl-2">
+        <button class="btn btn-outline-primary" type="submit">Change</button>
+    </span>
+}
