@@ -200,7 +200,7 @@ img {
     font-size: 17px;
     height: 33px;
     position: absolute;
-    right: 0;
+    right: 10px;
     top: 11px;
     width: 33px;
 }
@@ -210,6 +210,7 @@ img {
 }
 
 .msg_history {
-    height: 516px;
+    height: auto;
+    max-height: 500px;
     overflow-y: auto;
 }

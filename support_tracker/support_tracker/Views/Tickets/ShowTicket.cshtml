@@ -61,7 +61,7 @@
     </div>
     <div class="pt-5">
         @{ 
-            Html.RenderPartial("MessagePartial");
+            Html.RenderAction("GetMessages", "Message", new { ticketId = @Model.TicketId });
         }
     </div>
     <div class="text-center pt-5">
