@@ -50,8 +50,13 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="input-group">
-                            @{
+                            @if (Request.IsAuthenticated)
+                            {
                                 Html.RenderPartial("ChangeTicketStatusPartial", @Model);
+                            }
+                            else
+                            {
+                                <span>@Model.Status.Status</span>
                             }
                         </div>
                     </div>
