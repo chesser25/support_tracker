@@ -2,6 +2,11 @@
 using support_tracker.Abstracts;
 using support_tracker.Models;
 using System.Linq;
+using System;
+using Microsoft.AspNet.Identity;
+using System.Web;
+using support_tracker.Auth;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace support_tracker.Controllers
 {
@@ -16,11 +21,48 @@ namespace support_tracker.Controllers
             this.ticketsRepository = ticketsRepository;
         }
 
+
+        private StaffManager StaffManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().GetUserManager<StaffManager>();
+            }
+        }
+
+        [HttpGet]
         public ActionResult GetMessages(int ticketId)
         {
             var ticket = ticketsRepository.Get(ticketId);
             var messages = ticket.Messages?.ToList();
-            return View("MessagePartial", messages);
+            ViewBag.TicketId = ticketId;
+            return View(messages);
+        }
+
+        [HttpGet]
+        public ActionResult CreateMessage(int ticketId)
+        {
+            ViewBag.TicketId = ticketId;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateMessage(Message message)
+        {
+            if(ModelState.IsValid)
+            {
+                var ticket = ticketsRepository.Get(message.TicketId);
+                var user = StaffManager.FindById(User.Identity.GetUserId());
+                message.CreationDate = DateTime.Now;
+                message.Ticket = ticket;
+                message.StaffMember = user;
+                messageRepository.Create(message);
+            }
+            else
+            {
+                TempData["error"] = ModelState.Values.FirstOrDefault().Errors.FirstOrDefault().ErrorMessage;
+            }
+            return RedirectToRoute("tickets/get/id", new { id = message.TicketId });
         }
     }
 }
