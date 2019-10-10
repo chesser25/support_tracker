@@ -14,11 +14,13 @@ namespace support_tracker.Controllers
     {
         private readonly IMessageRepository<Message> messageRepository;
         private readonly ITicketsRepository<Ticket> ticketsRepository;
+        private readonly ITicketsMailer ticketsMailer;
 
-        public MessageController(IMessageRepository<Message> messageRepository, ITicketsRepository<Ticket> ticketsRepository)
+        public MessageController(IMessageRepository<Message> messageRepository, ITicketsRepository<Ticket> ticketsRepository, ITicketsMailer ticketsMailer)
         {
             this.messageRepository = messageRepository;
             this.ticketsRepository = ticketsRepository;
+            this.ticketsMailer = ticketsMailer;
         }
 
 
@@ -62,6 +64,7 @@ namespace support_tracker.Controllers
                 message.Ticket = ticket;
                 message.StaffMember = user;
                 messageRepository.Create(message);
+                ticketsMailer.Send(Constants_files.Constants.MAIL_HEADER, string.Format("{0} Link: {1}", Constants_files.Constants.SUPPORT_RESPONSE_ON_TICKET, Url.Action("GetTicket", "Tickets", new { id = ticket.TicketId }, Request.Url.Scheme)), ticket.CustomerEmail);
             }
             else
             {
