@@ -117,7 +117,7 @@ namespace support_tracker.Controllers
             {
                 IsPersistent = true
             }, claim);
-            return Redirect("tickets/get");
+            return RedirectToRoute("tickets/get");
         }
 
         public ActionResult Logout()
