@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity.Owin;
 using System.Collections.Generic;
 using System.Linq;
 using PagedList;
+using support_tracker.ViewModels;
 
 namespace support_tracker.Controllers
 {
@@ -144,7 +145,7 @@ namespace support_tracker.Controllers
                 var ticket = ticketsRepository.Get(model.TicketId);
                 ticket.Status = ticketsStatusRepository.GetById(model.TicketStatusId);
                 ticketsRepository.Update(ticket);
-                return PartialView("AlertPartial", "success");
+                return PartialView("AlertPartial", new AlertModel { Message = Constants_files.Constants.TICKET_STATUS_CHANGED, Style = Style.success.ToString() });
             }
             return null;
         }

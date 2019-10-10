@@ -1,7 +1,7 @@
-﻿@model string
+﻿@model support_tracker.ViewModels.AlertModel
 
-<div class="alert alert-@Model alert-dismissible fade show" role="alert">
-    <strong>Ticket status has been changed!</strong>
+<div class="alert alert-@Model.Style alert-dismissible fade show" role="alert">
+    <strong>@Model.Message</strong>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
