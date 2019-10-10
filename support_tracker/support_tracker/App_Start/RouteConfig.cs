@@ -10,6 +10,18 @@ namespace support_tracker
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+               "messages/create",
+               url: "messages/create/{ticketId}",
+               defaults: new { controller = "Message", action = "CreateMessage", ticketId = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+               "messages/getAll",
+               url: "messages/getAll/{ticketId}",
+               defaults: new { controller = "Message", action = "GetMessages", ticketId = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                "ticket/assign",
                url: "ticket/assign/{id}",
                defaults: new { controller = "Tickets", action = "AssignTicket", id = UrlParameter.Optional }
