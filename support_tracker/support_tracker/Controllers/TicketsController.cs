@@ -37,7 +37,7 @@ namespace support_tracker.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [AllowAnonymous]
         public ActionResult Create()
         {
             ViewBag.Departments = new SelectList(this.departmentsRepository.GetAll(), "DepartmentId", "DepartmentName");
@@ -45,6 +45,7 @@ namespace support_tracker.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult Create(Ticket ticket)
         {
             ViewBag.Departments = new SelectList(this.departmentsRepository.GetAll(), "DepartmentId", "DepartmentName");
@@ -101,6 +102,7 @@ namespace support_tracker.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult GetTicket(int? id)
         {
             ViewBag.Statuses = new SelectList(this.ticketsStatusRepository.GetAll(), "TicketStatusId", "Status");
