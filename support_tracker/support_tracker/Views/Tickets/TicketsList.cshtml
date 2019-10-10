@@ -10,46 +10,50 @@
     <h1>List of all tickets</h1>
 </div>
 
-@using (Html.BeginForm("GetTickets", "Tickets", FormMethod.Get))
-{
-    <p>
-        Find by ticket id or subject: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" />
-    </p>
-}
+<div class="pt-5">
+    @using (Html.BeginForm("GetTickets", "Tickets", FormMethod.Get))
+    {
+        <p>
+            Find by ticket id or subject: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+            <input type="submit" value="Search" />
+        </p>
+    }
+</div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col" class="align-middle text-center">#</th>
-            <th scope="col" class="align-middle text-center">@Html.ActionLink("Customer Name", "GetTickets", new { sortOrder = ViewBag.CustomerName, currentFilter = ViewBag.CurrentFilter })</th>
-            <th scope="col" class="align-middle text-center">Customer Email</th>
-            <th scope="col" class="align-middle text-center">Subject</th>
-            <th scope="col" class="align-middle text-center">Department</th>
-            <th scope="col" class="align-middle text-center">@Html.ActionLink("Ticket Status", "GetTickets", new { sortOrder = ViewBag.TicketStatus, currentFilter = ViewBag.CurrentFilter })</th>
-            <th scope="col" colspan="2" class="align-middle text-center">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var ticket in Model)
-        {
+<div class="pt-2">
+    <table class="table">
+        <thead>
             <tr>
-                <th scope="row" class="align-middle text-center">@ticket.TicketId</th>
-                <td class="align-middle text-center">@ticket.CustomerName</td>
-                <td class="align-middle text-center">@ticket.CustomerEmail</td>
-                <td class="align-middle text-center">@ticket.Subject</td>
-                <td class="align-middle text-center">@ticket.Department.DepartmentName</td>
-                <td class="align-middle text-center">@ticket.Status.Status</td>
-                <td class="align-middle text-center">@Html.ActionLink("Watch", "GetTicket", new { id = ticket.TicketId }, new { @class = "btn btn-info" })</td>
-                <td class="align-middle text-center" id="ticketPartial-@ticket.TicketId">
-                    @{
-                        Html.RenderPartial("TakeTicketPartial", ticket);
-                    }
-                </td>
+                <th scope="col" class="align-middle text-center">#</th>
+                <th scope="col" class="align-middle text-center">@Html.ActionLink("Customer Name", "GetTickets", new { sortOrder = ViewBag.CustomerName, currentFilter = ViewBag.CurrentFilter })</th>
+                <th scope="col" class="align-middle text-center">Customer Email</th>
+                <th scope="col" class="align-middle text-center">Subject</th>
+                <th scope="col" class="align-middle text-center">Department</th>
+                <th scope="col" class="align-middle text-center">@Html.ActionLink("Ticket Status", "GetTickets", new { sortOrder = ViewBag.TicketStatus, currentFilter = ViewBag.CurrentFilter })</th>
+                <th scope="col" colspan="2" class="align-middle text-center">Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var ticket in Model)
+            {
+                <tr>
+                    <th scope="row" class="align-middle text-center">@ticket.TicketId</th>
+                    <td class="align-middle text-center">@ticket.CustomerName</td>
+                    <td class="align-middle text-center">@ticket.CustomerEmail</td>
+                    <td class="align-middle text-center">@ticket.Subject</td>
+                    <td class="align-middle text-center">@ticket.Department.DepartmentName</td>
+                    <td class="align-middle text-center">@ticket.Status.Status</td>
+                    <td class="align-middle text-center">@Html.ActionLink("Watch", "GetTicket", new { id = ticket.TicketId }, new { @class = "btn btn-info" })</td>
+                    <td class="align-middle text-center" id="ticketPartial-@ticket.TicketId">
+                        @{
+                            Html.RenderPartial("TakeTicketPartial", ticket);
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 <br />
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
