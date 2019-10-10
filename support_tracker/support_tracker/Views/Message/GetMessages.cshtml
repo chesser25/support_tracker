@@ -27,18 +27,9 @@
                                     <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
                                     <div class="received_msg">
                                         <div class="received_withd_msg">
-                                            <p>
-                                                @Model[i].Text
-                                            </p>
-                                            @if (Model[i].StaffMember == null)
-                                            {
-                                                <h6>Anonymous</h6>
+                                            @{
+                                                Html.RenderPartial("MessagePartial", Model[i]);
                                             }
-                                            else
-                                            {
-                                                <h6>@Model[i].StaffMember.UserName</h6>
-                                            }
-                                            <span class="time_date">   @Model[i].CreationDate.ToString("hh:mm tt", CultureInfo.InvariantCulture)   |    @Model[i].CreationDate.ToShortDateString()</span>
                                         </div>
                                     </div>
                                 </div>
@@ -47,18 +38,9 @@
                             {
                                 <div class="outgoing_msg pr-2">
                                     <div class="sent_msg">
-                                        <p>
-                                            @Model[i].Text
-                                        </p>
-                                        @if (Model[i].StaffMember == null)
-                                        {
-                                            <h6>Anonymous</h6>
+                                        @{
+                                            Html.RenderPartial("MessagePartial", Model[i]);
                                         }
-                                        else
-                                        {
-                                            <h6>@Model[i].StaffMember.UserName</h6>
-                                        }
-                                        <span class="time_date">  @Model[i].CreationDate.ToString("hh:mm tt", CultureInfo.InvariantCulture)   |    @Model[i].CreationDate.ToShortDateString()</span>
                                     </div>
                                 </div>
                             }

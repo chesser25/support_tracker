@@ -1,0 +1,15 @@
+﻿@using System.Globalization;
+@model support_tracker.Models.Message
+
+<p>
+    @Model.Text
+</p>
+@if (Model.StaffMember == null)
+{
+    <h6>Anonymous</h6>
+}
+else
+{
+    <h6>@Model.StaffMember.UserName</h6>
+}
+<span class="time_date">   @Model.CreationDate.ToString("hh:mm tt", CultureInfo.InvariantCulture)   |    @Model.CreationDate.ToShortDateString()</span>
