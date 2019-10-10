@@ -1,0 +1,19 @@
+﻿@model support_tracker.Models.Message
+
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("CreateMessage", "Message", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.HiddenFor(model => model.TicketId, new { ticketId = ViewBag.TicketId })
+        @Html.TextBoxFor(model => model.Text, new { @class = "write_msg pl-2", placeholder = "Type a message" })
+        <span class="field-validation-valid text-danger">
+            @TempData["error"]
+        </span>
+    </div>
+    <button class="msg_send_btn" type="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+}
+

@@ -1,4 +1,5 @@
-﻿@model IList<support_tracker.Models.Message>
+﻿@using System.Globalization;
+@model IList<support_tracker.Models.Message>
 
 @{
     Layout = null;
@@ -27,9 +28,17 @@
                                     <div class="received_msg">
                                         <div class="received_withd_msg">
                                             <p>
-                                                Model[i].Text
+                                                @Model[i].Text
                                             </p>
-                                            <span class="time_date"> 11:01 AM    |    June 9</span>
+                                            @if (Model[i].StaffMember == null)
+                                            {
+                                                <h6>Anonymous</h6>
+                                            }
+                                            else
+                                            {
+                                                <h6>@Model[i].StaffMember.UserName</h6>
+                                            }
+                                            <span class="time_date">   @Model[i].CreationDate.ToString("hh:mm tt", CultureInfo.InvariantCulture)   |    @Model[i].CreationDate.ToShortDateString()</span>
                                         </div>
                                     </div>
                                 </div>
@@ -39,9 +48,17 @@
                                 <div class="outgoing_msg pr-2">
                                     <div class="sent_msg">
                                         <p>
-                                            Model[i].Text
+                                            @Model[i].Text
                                         </p>
-                                        <span class="time_date"> 11:01 AM    |    June 9</span>
+                                        @if (Model[i].StaffMember == null)
+                                        {
+                                            <h6>Anonymous</h6>
+                                        }
+                                        else
+                                        {
+                                            <h6>@Model[i].StaffMember.UserName</h6>
+                                        }
+                                        <span class="time_date">  @Model[i].CreationDate.ToString("hh:mm tt", CultureInfo.InvariantCulture)   |    @Model[i].CreationDate.ToShortDateString()</span>
                                     </div>
                                 </div>
                             }
@@ -50,8 +67,9 @@
                 </div>
                 <div class="type_msg m-2">
                     <div class="input_msg_write">
-                        <input type="text" class="write_msg pl-2" placeholder="Type a message" />
-                        <button class="msg_send_btn" type="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                        @{
+                            Html.RenderAction("CreateMessage", "Message", new { ticketId = ViewBag.TicketId });
+                        }
                     </div>
                 </div>
             </div>
