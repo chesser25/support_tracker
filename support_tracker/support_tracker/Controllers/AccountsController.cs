@@ -33,6 +33,10 @@ namespace support_tracker.Controllers
         [HttpGet]
         public ActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -60,6 +64,10 @@ namespace support_tracker.Controllers
 
         public ActionResult Login(string returnUrl)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.returnUrl = returnUrl;
             return View();
         }
