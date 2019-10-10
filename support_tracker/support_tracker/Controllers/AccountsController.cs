@@ -31,6 +31,7 @@ namespace support_tracker.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult Register()
         {
             if (User.Identity.IsAuthenticated)
@@ -41,6 +42,8 @@ namespace support_tracker.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterModel model)
         {
             if (ModelState.IsValid)
@@ -62,6 +65,8 @@ namespace support_tracker.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
@@ -74,6 +79,7 @@ namespace support_tracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<ActionResult> Login(LoginModel model, string returnUrl)
         {
             if (ModelState.IsValid)

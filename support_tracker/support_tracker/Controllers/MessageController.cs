@@ -31,6 +31,8 @@ namespace support_tracker.Controllers
         }
 
         [HttpGet]
+        [ChildActionOnly]
+        [AllowAnonymous]
         public ActionResult GetMessages(int ticketId)
         {
             var ticket = ticketsRepository.Get(ticketId);
@@ -40,6 +42,8 @@ namespace support_tracker.Controllers
         }
 
         [HttpGet]
+        [ChildActionOnly]
+        [AllowAnonymous]
         public ActionResult CreateMessage(int ticketId)
         {
             ViewBag.TicketId = ticketId;
@@ -47,6 +51,7 @@ namespace support_tracker.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult CreateMessage(Message message)
         {
             if(ModelState.IsValid)
