@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using support_tracker.Constants_files;
 
 namespace support_tracker.Models
@@ -18,7 +19,9 @@ namespace support_tracker.Models
         public int TicketId { get; set; }
         public Ticket Ticket { get; set; }
 
-        public int StaffMemberId { get; set; }
-        public StaffMember StaffMember { get; set; }
+        public string StaffMemberId { get; set; }
+
+        [ForeignKey("StaffMemberId")]
+        public virtual StaffMember StaffMember { get; set; }
     }
 }
