@@ -104,7 +104,7 @@ namespace support_tracker.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult GetTicket(int? id)
+        public ActionResult GetTicket(int id)
         {
             ViewBag.Statuses = new SelectList(this.ticketsStatusRepository.GetAll(), "TicketStatusId", "Status");
             var ticket = ticketsRepository.Get(id);

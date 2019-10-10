@@ -29,7 +29,7 @@ namespace support_tracker.Repositories
             dataContext.SaveChanges();
         }
 
-        public virtual T Get(int? id)
+        public virtual T Get(int id)
         {
             return dbSet.Where(t => t.TicketId == id)?.Include(d => d.Department).Include(s => s.Status).Include(u => u.StaffMember).Include(c => c.Messages).FirstOrDefault();
         }
