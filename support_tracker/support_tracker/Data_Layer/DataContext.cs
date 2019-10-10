@@ -6,10 +6,7 @@ namespace support_tracker.DbLayer
 {
     public class DataContext : IdentityDbContext<StaffMember>
     {
-        public DataContext() : base()
-        {
-            Database.SetInitializer(new DbInitializer());
-        }
+        public DataContext() : base() { }
 
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TicketStatus> TicketStatuses { get; set; }
