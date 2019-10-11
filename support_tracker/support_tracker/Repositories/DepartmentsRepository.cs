@@ -2,11 +2,12 @@
 using System.Data.Entity;
 using System.Linq;
 using support_tracker.Abstracts;
+using support_tracker.Models;
 
 namespace support_tracker.Repositories
 {
     public class DepartmentsRepository<T,C> : IGenericRepository<T>
-        where T : class
+        where T : Department
         where C : DbContext
     {
         private C dataContext;
