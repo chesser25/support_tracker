@@ -74,9 +74,12 @@ else
                 Html.RenderAction("GetMessages", "Message", new { ticketId = @Model.TicketId });
             }
         </div>
-        <div class="text-center pt-5">
-            @Html.ActionLink("Back to the list", "GetTickets")
-        </div>
+        @if (Request.IsAuthenticated)
+        {
+            <div class="text-center pt-5">
+                @Html.ActionLink("Back to the list", "GetTickets")
+            </div>
+        }
     </div>
 }
 
