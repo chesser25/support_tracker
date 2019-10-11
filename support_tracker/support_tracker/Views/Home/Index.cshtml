@@ -7,5 +7,8 @@
 <main role="main" class="container">
     <h1 class="mt-5">Welcome to a support tracker!</h1>
     <p class="lead">Please provide your feedback <a href="tickets/create">here</a>, if you have some issues.</p>
-    <p>To resolve issues, please <a href="login">Login to our support system!</a></p>
+    @if (!Request.IsAuthenticated)
+    {
+        <p>To resolve issues, please <a href="login">Login to our support system!</a></p>
+    }
 </main>
