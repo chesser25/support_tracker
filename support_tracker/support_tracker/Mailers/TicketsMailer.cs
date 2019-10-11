@@ -1,6 +1,5 @@
 ﻿using support_tracker.Abstracts;
 using System.Net.Mail;
-using support_tracker.Models;
 
 namespace support_tracker.Mailer
 {

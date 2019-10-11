@@ -5,7 +5,6 @@ using support_tracker.Abstracts;
 using support_tracker.Repositories;
 using support_tracker.Models;
 using System.Data.Entity;
-using Ninject.Web.Common;
 using support_tracker.DbLayer;
 using System.Web.Mvc;
 using support_tracker.Mailer;
