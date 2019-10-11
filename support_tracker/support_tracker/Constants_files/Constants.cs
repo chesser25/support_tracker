@@ -8,5 +8,6 @@
         public const string FIELD_REQUIRED = "This field can not be empty.";
         public const string TICKET_STATUS_CHANGED = "Ticket status has been changed!";
         public const string SUPPORT_RESPONSE_ON_TICKET = "There are some news for your ticket. Please take a look at link below.";
+        public const string INVALIDA_LOGIN_DATA = "Invalid username or password.";
     }
 }
