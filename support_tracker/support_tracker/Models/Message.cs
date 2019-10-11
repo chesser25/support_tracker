@@ -9,7 +9,7 @@ namespace support_tracker.Models
     {
         public int Id { get; set; }
 
-        [StringLength(30, MinimumLength = 3, ErrorMessage = Constants.MESSAGE_MAX_SYMBOLS_COUNT)]
+        [StringLength(30, MinimumLength = 3, ErrorMessage = Constants.MESSAGE_MIN_MAX_SYMBOLS_COUNT)]
         [Required(ErrorMessage = Constants.FIELD_REQUIRED)]
         public string Text { get; set; }
 

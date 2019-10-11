@@ -10,9 +10,7 @@
     <div class="form-group">
         @Html.HiddenFor(model => model.TicketId, new { ticketId = ViewBag.TicketId })
         @Html.TextBoxFor(model => model.Text, new { @class = "pl-2", placeholder = "Type a message" })
-        <span class="field-validation-valid text-danger">
-            @TempData["error"]
-        </span>
+        @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
     </div>
     <button class="msg_send_btn" type="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
 }
