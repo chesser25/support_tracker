@@ -101,7 +101,7 @@ namespace support_tracker.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Invalid username or password.");
+                    ModelState.AddModelError("", Constants_files.Constants.INVALIDA_LOGIN_DATA);
                 }
             }
             ViewBag.returnUrl = returnUrl;
