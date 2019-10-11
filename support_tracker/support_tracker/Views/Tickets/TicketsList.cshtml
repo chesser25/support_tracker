@@ -34,28 +34,40 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var ticket in Model)
+            @if (Model == null || Model.Count == 0)
             {
                 <tr>
-                    <th scope="row" class="align-middle text-center">@ticket.TicketId</th>
-                    <td class="align-middle text-center">@ticket.CustomerName</td>
-                    <td class="align-middle text-center">@ticket.CustomerEmail</td>
-                    <td class="align-middle text-center">@ticket.Subject</td>
-                    <td class="align-middle text-center">@ticket.Department.DepartmentName</td>
-                    <td class="align-middle text-center">@ticket.Status.Status</td>
-                    <td class="align-middle text-center">@Html.ActionLink("Watch", "GetTicket", new { id = ticket.TicketId }, new { @class = "btn btn-info" })</td>
-                    <td class="align-middle text-center" id="ticketPartial-@ticket.TicketId">
-                        @{
-                            Html.RenderPartial("TakeTicketPartial", ticket);
-                        }
-                    </td>
+                    <td colspan="7" class="align-middle text-center font-italic pt-5">There are no tickets.</td>
                 </tr>
+            }
+            else
+            {
+                foreach (var ticket in Model)
+                {
+                    <tr>
+                        <th scope="row" class="align-middle text-center">@ticket.TicketId</th>
+                        <td class="align-middle text-center">@ticket.CustomerName</td>
+                        <td class="align-middle text-center">@ticket.CustomerEmail</td>
+                        <td class="align-middle text-center">@ticket.Subject</td>
+                        <td class="align-middle text-center">@ticket.Department.DepartmentName</td>
+                        <td class="align-middle text-center">@ticket.Status.Status</td>
+                        <td class="align-middle text-center">@Html.ActionLink("Watch", "GetTicket", new { id = ticket.TicketId }, new { @class = "btn btn-info" })</td>
+                        <td class="align-middle text-center" id="ticketPartial-@ticket.TicketId">
+                            @{
+                                Html.RenderPartial("TakeTicketPartial", ticket);
+                            }
+                        </td>
+                    </tr>
+                 }
             }
         </tbody>
     </table>
 </div>
 <br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@if(Model != null && Model.Count > 0)
+{ 
+    <span>Page</span> <span>@(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</span>
 
-@Html.PagedListPager(Model, page => Url.Action("GetTickets",
-    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    @Html.PagedListPager(Model, page => Url.Action("GetTickets",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+}
