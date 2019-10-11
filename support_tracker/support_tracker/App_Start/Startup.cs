@@ -15,8 +15,7 @@ namespace support_tracker
             app.CreatePerOwinContext<StaffManager>(StaffManager.Create);
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Account/Login"),
+                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie
             });
         }
     }
