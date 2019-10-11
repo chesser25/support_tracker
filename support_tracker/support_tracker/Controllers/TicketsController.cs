@@ -53,6 +53,7 @@ namespace support_tracker.Controllers
             return View(ticket);
         }
 
+        // Method to get tickets list by sorting, search string value and page number
         [HttpGet]
         public ViewResult GetTickets(string sortOrder, string currentFilter, string searchString, int? page)
         {
