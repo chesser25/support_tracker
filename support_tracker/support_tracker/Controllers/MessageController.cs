@@ -57,10 +57,6 @@ namespace support_tracker.Controllers
                 messageRepository.Create(message);
                 ticketsMailer.Send(Constants_files.Constants.MAIL_HEADER, string.Format("{0} Link: {1}", Constants_files.Constants.SUPPORT_RESPONSE_ON_TICKET, Url.Action("GetTicket", "Tickets", new { id = ticket.TicketId }, Request.Url.Scheme)), ticket.CustomerEmail);
             }
-            else
-            {
-                TempData["error"] = ModelState.Values.FirstOrDefault().Errors.FirstOrDefault().ErrorMessage;
-            }
             return RedirectToRoute("tickets/get/id", new { id = message.TicketId });
         }
     }
