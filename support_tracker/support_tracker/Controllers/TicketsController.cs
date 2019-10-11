@@ -3,9 +3,7 @@ using System.Web.Mvc;
 using support_tracker.Abstracts;
 using System;
 using Microsoft.AspNet.Identity;
-using System.Web;
 using support_tracker.Auth;
-using Microsoft.AspNet.Identity.Owin;
 using System.Collections.Generic;
 using System.Linq;
 using PagedList;
@@ -19,22 +17,16 @@ namespace support_tracker.Controllers
         private readonly ITicketsRepository<Ticket> ticketsRepository;
         private readonly ITicketsMailer ticketsMailer;
         private readonly ITicketStatus<TicketStatus> ticketsStatusRepository;
+        private readonly StaffManager staffManager;
 
-        public TicketsController(IGenericRepository<Department> departmentsRepository, ITicketsRepository<Ticket> ticketsRepository, ITicketsMailer ticketsMailer, ITicketStatus<TicketStatus> ticketsStatusRepository)
+        public TicketsController(IGenericRepository<Department> departmentsRepository, ITicketsRepository<Ticket> ticketsRepository, 
+                                 ITicketsMailer ticketsMailer, ITicketStatus<TicketStatus> ticketsStatusRepository, AuthHelper authHelper)
         {
             this.departmentsRepository = departmentsRepository;
             this.ticketsRepository = ticketsRepository;
             this.ticketsMailer = ticketsMailer;
             this.ticketsStatusRepository = ticketsStatusRepository;
-        }
-
-
-        private StaffManager StaffManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().GetUserManager<StaffManager>();
-            }
+            this.staffManager = authHelper.GetStaffManagerFromOwinContext;
         }
 
         [HttpGet]
@@ -117,7 +109,7 @@ namespace support_tracker.Controllers
             if (Request.IsAjaxRequest())
             {
                 var ticket = ticketsRepository.Get(id);
-                ticket.StaffMember = StaffManager.FindById(User.Identity.GetUserId());
+                ticket.StaffMember = staffManager.FindById(User.Identity.GetUserId());
                 ticketsRepository.Update(ticket);
                 return PartialView("TakeTicketPartial", ticket);
             }

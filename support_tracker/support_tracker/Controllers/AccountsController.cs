@@ -1,9 +1,7 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using support_tracker.Auth;
 using support_tracker.Models;
@@ -13,20 +11,12 @@ namespace support_tracker.Controllers
 {
     public class AccountsController : Controller
     {
-        private StaffManager StaffManager
+        private readonly StaffManager staffManager;
+        private readonly IAuthenticationManager authenticationManager;
+        public AccountsController(AuthHelper authHelper)
         {
-            get
-            {
-                return HttpContext.GetOwinContext().GetUserManager<StaffManager>();
-            }
-        }
-
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
+            this.staffManager = authHelper.GetStaffManagerFromOwinContext;
+            this.authenticationManager = authHelper.GetAuthenticationManagerFromOwinContext;
         }
 
         [HttpGet]
@@ -48,7 +38,7 @@ namespace support_tracker.Controllers
             if (ModelState.IsValid)
             {
                 StaffMember staffMember = new StaffMember { UserName = model.UserName, Email = model.Email };
-                IdentityResult result = await StaffManager.CreateAsync(staffMember, model.Password);
+                IdentityResult result = await staffManager.CreateAsync(staffMember, model.Password);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Login", "Accounts");
@@ -83,12 +73,12 @@ namespace support_tracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await StaffManager.FindAsync(model.Email, model.Password);
-                var foundUserByEmail = await StaffManager.FindByEmailAsync(model.Email);
+                var user = await staffManager.FindAsync(model.Email, model.Password);
+                var foundUserByEmail = await staffManager.FindByEmailAsync(model.Email);
                 bool isUserExist = false;
                 if (foundUserByEmail != null)
                 {
-                    isUserExist = await StaffManager.CheckPasswordAsync(foundUserByEmail, model.Password);
+                    isUserExist = await staffManager.CheckPasswordAsync(foundUserByEmail, model.Password);
                 }
                 if (user != null)
                 {
@@ -109,10 +99,10 @@ namespace support_tracker.Controllers
 
         private async Task<ActionResult> Authenticate(StaffMember staffMember)
         {
-            ClaimsIdentity claim = await StaffManager.CreateIdentityAsync(staffMember,
+            ClaimsIdentity claim = await staffManager.CreateIdentityAsync(staffMember,
                    DefaultAuthenticationTypes.ApplicationCookie);
-            AuthenticationManager.SignOut();
-            AuthenticationManager.SignIn(new AuthenticationProperties
+            authenticationManager.SignOut();
+            authenticationManager.SignIn(new AuthenticationProperties
             {
                 IsPersistent = true
             }, claim);
@@ -121,7 +111,7 @@ namespace support_tracker.Controllers
 
         public ActionResult Logout()
         {
-            AuthenticationManager.SignOut();
+            authenticationManager.SignOut();
             return RedirectToAction("Login");
         }
     }

@@ -4,9 +4,7 @@ using support_tracker.Models;
 using System.Linq;
 using System;
 using Microsoft.AspNet.Identity;
-using System.Web;
 using support_tracker.Auth;
-using Microsoft.AspNet.Identity.Owin;
 
 namespace support_tracker.Controllers
 {
@@ -15,21 +13,14 @@ namespace support_tracker.Controllers
         private readonly IMessageRepository<Message> messageRepository;
         private readonly ITicketsRepository<Ticket> ticketsRepository;
         private readonly ITicketsMailer ticketsMailer;
+        private readonly StaffManager staffManager;
 
-        public MessageController(IMessageRepository<Message> messageRepository, ITicketsRepository<Ticket> ticketsRepository, ITicketsMailer ticketsMailer)
+        public MessageController(IMessageRepository<Message> messageRepository, ITicketsRepository<Ticket> ticketsRepository, ITicketsMailer ticketsMailer, AuthHelper authHelper)
         {
             this.messageRepository = messageRepository;
             this.ticketsRepository = ticketsRepository;
             this.ticketsMailer = ticketsMailer;
-        }
-
-
-        private StaffManager StaffManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().GetUserManager<StaffManager>();
-            }
+            this.staffManager = authHelper.GetStaffManagerFromOwinContext;
         }
 
         [HttpGet]
@@ -59,7 +50,7 @@ namespace support_tracker.Controllers
             if(ModelState.IsValid)
             {
                 var ticket = ticketsRepository.Get(message.TicketId);
-                var user = StaffManager.FindById(User.Identity.GetUserId());
+                var user = staffManager.FindById(User.Identity.GetUserId());
                 message.CreationDate = DateTime.Now;
                 message.Ticket = ticket;
                 message.StaffMember = user;
