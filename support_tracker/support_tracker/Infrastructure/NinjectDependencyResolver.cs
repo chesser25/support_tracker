@@ -8,6 +8,7 @@ using System.Data.Entity;
 using support_tracker.DbLayer;
 using System.Web.Mvc;
 using support_tracker.Mailer;
+using support_tracker.Auth;
 
 namespace support_tracker.Infrastructure
 {
@@ -39,6 +40,7 @@ namespace support_tracker.Infrastructure
             kernel.Bind<DbContext>().To<DataContext>().InSingletonScope();
             kernel.Bind<ITicketStatus<TicketStatus>>().To<TicketStatusRepository<TicketStatus, DbContext>>();
             kernel.Bind<IMessageRepository<Message>>().To<MessageRepository<Message, DbContext>>();
+            kernel.Bind<AuthHelper>().ToSelf().InSingletonScope();
         }
     }
 }
