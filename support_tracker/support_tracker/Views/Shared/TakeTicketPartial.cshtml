@@ -6,14 +6,14 @@
 {
     using (Ajax.BeginForm("AssignTicket", new { id = Model.TicketId }, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "ticketPartial-" + @Model.TicketId, InsertionMode = InsertionMode.Replace }))
     {
-        <button type="submit" class="btn btn-success btn-md">Assign</button>
+        <button type="submit" class="btn btn-success btn-sm">Assign</button>
     }
 }
 else if (Model.StaffMemberId == User.Identity.GetUserId())
 {
     using (Ajax.BeginForm("UnassignTicket", new { id = Model.TicketId }, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "ticketPartial-" + @Model.TicketId, InsertionMode = InsertionMode.Replace }))
     {
-        <button type="submit" class="btn btn-danger btn-md">Un-assign</button>
+        <button type="submit" class="btn btn-danger btn-sm">Un-assign</button>
     }
 }
 else
