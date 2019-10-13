@@ -1,11 +1,17 @@
-﻿<!DOCTYPE html>
+﻿@using System.Web.Optimization
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Issues tracker</title>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet" />
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/font-awesome")
+    @Styles.Render("~/Content/messageList")
+    @Styles.Render("~/Content/pagedList")
+    @Styles.Render("~/Content/site")
+
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -36,17 +42,18 @@
 
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/ajax")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/bundles/jqueryval")
+        @RenderSection("scripts", required: false)
+        
+        <footer class="container footer">
+            <hr />
             <p>&copy; @DateTime.Now.Year - The issue tracking system</p>
         </footer>
     </div>
-
-    <script src="@Url.Content("~/Scripts/jquery-3.4.1.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Scripts/modernizr-2.6.2.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 </body>
 </html>

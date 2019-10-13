@@ -3,6 +3,7 @@ using support_tracker.DbLayer;
 using System.Data.Entity;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Optimization;
 using System.Web.Routing;
 
 namespace support_tracker
@@ -14,6 +15,7 @@ namespace support_tracker
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
             Database.SetInitializer(new DbInitializer());
         }
     }
