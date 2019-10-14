@@ -10,15 +10,15 @@ namespace support_tracker
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-               "messages/create",
-               url: "messages/create/{ticketId}",
-               defaults: new { controller = "Message", action = "CreateMessage", ticketId = UrlParameter.Optional }
+               "message/create",
+               url: "message/create/{ticketId}",
+               defaults: new { controller = "Messages", action = "CreateMessage", ticketId = UrlParameter.Optional }
             );
 
             routes.MapRoute(
                "messages/getAll",
                url: "messages/getAll/{ticketId}",
-               defaults: new { controller = "Message", action = "GetMessages", ticketId = UrlParameter.Optional }
+               defaults: new { controller = "Messages", action = "GetMessages", ticketId = UrlParameter.Optional }
             );
 
             routes.MapRoute(
@@ -34,7 +34,7 @@ namespace support_tracker
             );
 
             routes.MapRoute(
-               "tickets/get",
+               "dashboard",
                url: "tickets/getAll/{sortOrder}/{currentFilter}/{searchString}/{tab}/{page}",
                defaults: new { controller = "Tickets", action = "GetTickets", sortOrder = UrlParameter.Optional, currentFilter = UrlParameter.Optional,  searchString = UrlParameter.Optional, tab = UrlParameter.Optional, page = UrlParameter.Optional }
             );
@@ -58,8 +58,8 @@ namespace support_tracker
             );
 
             routes.MapRoute(
-              "tickets/create",
-              url: "tickets/create",
+              "ticket/create",
+              url: "ticket/create",
               defaults: new { controller = "Tickets", action = "Create" }
            );
 
