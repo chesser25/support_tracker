@@ -4,10 +4,9 @@ using support_tracker.Abstracts;
 using System;
 using Microsoft.AspNet.Identity;
 using support_tracker.Auth;
-using System.Collections.Generic;
-using System.Linq;
 using PagedList;
 using support_tracker.ViewModels;
+using System.Threading.Tasks;
 
 namespace support_tracker.Controllers
 {
@@ -70,51 +69,17 @@ namespace support_tracker.Controllers
             }
 
             ViewBag.CurrentFilter = searchString;
-            IEnumerable<Ticket> tickets = ticketsRepository.GetAll();
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                tickets = tickets.Where(t => t.TicketHash.Contains(searchString) || t.Subject.Contains(searchString));
-            }
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    tickets = tickets.OrderByDescending(t => t.CustomerName);
-                    break;
-                case "TicketStatus":
-                    tickets = tickets.OrderBy(t => t.Status.Status);
-                    break;
-                case "status_desc":
-                    tickets = tickets.OrderByDescending(t => t.Status.Status);
-                    break;
-                default:
-                    tickets = tickets.OrderBy(t => t.CustomerName);
-                    break;
-            }
-
             ViewBag.Tab = tab;
-            switch (tab)
-            {
-                case "opened":
-                    tickets = tickets.Where(t => t.Status.Status.Equals("Waiting for Staff Response") || t.Status.Status.Equals("Waiting for Customer"));
-                    break;
-                case "on_hold":
-                    tickets = tickets.Where(t => t.Status.Status.Equals("On Hold"));
-                    break;
-                case "closed":
-                    tickets = tickets.Where(t => t.Status.Status.Equals("Cancelled") || t.Status.Status.Equals("Completed"));
-                    break;
-                case "my_tickets":
-                    tickets = tickets.Where(t => t.StaffMemberId == User.Identity.GetUserId());
-                    break;
-                case "unassigned":
-                    tickets = tickets.Where(t => t.StaffMember == null);
-                    break;
-            }
+            var tickets = ticketsRepository.GetAll();
+            tickets = ticketsRepository.GetTicketsBySearchString(searchString, tickets);
+            tickets = ticketsRepository.GetTicketsBySort(sortOrder, tickets);
+            tickets = ticketsRepository.GetTicketsByTab(tab, tickets, User.Identity.GetUserId());
 
             int pageSize = 3;
             int pageNumber = (page ?? 1);
             return View("TicketsList", tickets.ToPagedList(pageNumber, pageSize));
         }
+
 
         [HttpGet]
         [AllowAnonymous]
@@ -126,12 +91,13 @@ namespace support_tracker.Controllers
         }
 
         [HttpPost]
-        public PartialViewResult AssignTicket(int id)
+        public async Task<PartialViewResult> AssignTicket(int id)
         {
             if (Request.IsAjaxRequest())
             {
                 var ticket = ticketsRepository.Get(id);
-                ticket.StaffMember = staffManager.FindById(User.Identity.GetUserId());
+                string userId = User.Identity.GetUserId();
+                ticket.StaffMember = await staffManager.FindByIdAsync(userId);
                 ticketsRepository.Update(ticket);
                 return PartialView("TakeTicketPartial", ticket);
             }
