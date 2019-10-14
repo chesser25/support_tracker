@@ -5,6 +5,7 @@ using System.Linq;
 using System;
 using Microsoft.AspNet.Identity;
 using support_tracker.Auth;
+using System.Threading.Tasks;
 
 namespace support_tracker.Controllers
 {
@@ -26,9 +27,9 @@ namespace support_tracker.Controllers
         [HttpGet]
         [ChildActionOnly]
         [AllowAnonymous]
-        public ActionResult GetMessages(int ticketId)
+        public async Task<ActionResult> GetMessages(int ticketId)
         {
-            var ticket = ticketsRepository.Get(ticketId);
+            var ticket = await ticketsRepository.Get(ticketId);
             var messages = ticket.Messages?.ToList();
             ViewBag.TicketId = ticketId;
             return View(messages);
@@ -45,16 +46,17 @@ namespace support_tracker.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult CreateMessage(Message message)
+        public async Task<ActionResult> CreateMessage(Message message)
         {
             if(ModelState.IsValid)
             {
-                var ticket = ticketsRepository.Get(message.TicketId);
-                var user = staffManager.FindById(User.Identity.GetUserId());
+                var ticket = await ticketsRepository.Get(message.TicketId);
+                string userId = User.Identity.GetUserId();
+                var user = await staffManager.FindByIdAsync(userId);
                 message.CreationDate = DateTime.Now;
                 message.Ticket = ticket;
                 message.StaffMember = user;
-                messageRepository.Create(message);
+                await messageRepository.Create(message);
                 ticketsMailer.Send(Constants_files.Constants.MAIL_HEADER, string.Format("{0} Link: {1}", Constants_files.Constants.SUPPORT_RESPONSE_ON_TICKET, Url.Action("GetTicket", "Tickets", new { id = ticket.TicketId }, Request.Url.Scheme)), ticket.CustomerEmail);
             }
             return RedirectToRoute("tickets/get/id", new { id = message.TicketId });
