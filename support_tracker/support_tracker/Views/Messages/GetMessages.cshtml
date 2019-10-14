@@ -4,8 +4,6 @@
 @{
     Layout = null;
 }
-<link href="~/Content/MessageList.css" rel="stylesheet">
-
 <div class="container basic">
     <h3 class=" text-center">Messaging</h3>
     <div class="messaging">
@@ -51,7 +49,7 @@
                 <div class="type_msg m-2">
                     <div class="input_msg_write">
                         @{
-                            Html.RenderAction("CreateMessage", "Message", new { ticketId = ViewBag.TicketId });
+                            Html.RenderAction("CreateMessage", "Messages", new { ticketId = ViewBag.TicketId });
                         }
                     </div>
                 </div>

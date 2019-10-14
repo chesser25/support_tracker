@@ -1,12 +1,12 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Home";
 }
 
 <!-- Begin page content -->
 <main role="main" class="container">
     <h1 class="mt-5 text-center">Welcome to a support tracker!</h1>
-    <p class="lead text-center">Please provide your feedback <a href="tickets/create">here</a>, if you have some issues.</p>
+    <p class="lead text-center">Please provide your feedback <a href="ticket/create">here</a>, if you have some issues.</p>
     @if (!Request.IsAuthenticated)
     {
         <p class="text-center">To resolve issues, please <a href="login">Login to our support system!</a></p>

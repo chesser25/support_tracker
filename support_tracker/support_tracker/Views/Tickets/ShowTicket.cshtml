@@ -71,7 +71,7 @@ else
         </div>
         <div class="pt-5">
             @{ 
-                Html.RenderAction("GetMessages", "Message", new { ticketId = @Model.TicketId });
+                Html.RenderAction("GetMessages", "Messages", new { ticketId = @Model.TicketId });
             }
         </div>
         @if (Request.IsAuthenticated)
