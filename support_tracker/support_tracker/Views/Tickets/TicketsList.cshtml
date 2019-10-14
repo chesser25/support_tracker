@@ -19,81 +19,74 @@
         </p>
     }
 </div>
-<div>
+<div class="pt-2">
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a href="#" class="nav-link @(ViewBag.Tab == "opened"? "active": "")">Link</a>
+            <a href='@Url.Action("GetTickets", "Tickets", new {sortOrder = ViewBag.CurrentSort, tab = "", currentFilter = ViewBag.CurrentFilter }, Request.Url.Scheme)' class="nav-link @(ViewBag.Tab == null? "active": "")">All</a>
+        </li>
+        <li class="nav-item">
+            <a href='@Url.Action("GetTickets", "Tickets", new { sortOrder = ViewBag.CurrentSort, tab = "my_tickets", currentFilter = ViewBag.CurrentFilter }, Request.Url.Scheme)' class = "nav-link @(ViewBag.Tab == "my_tickets"? "active": "")">My tickets</a>
+        </li>
+        <li class="nav-item">
+            <a href='@Url.Action("GetTickets", "Tickets", new { sortOrder = ViewBag.CurrentSort, tab = "unassigned", currentFilter = ViewBag.CurrentFilter }, Request.Url.Scheme)' class="nav-link @(ViewBag.Tab == "unassigned"? "active": "")">Unassigned</a>
+        </li>
+        <li class="nav-item">
+            <a href='@Url.Action("GetTickets", "Tickets", new { sortOrder = ViewBag.CurrentSort, tab = "opened", currentFilter = ViewBag.CurrentFilter }, Request.Url.Scheme)' class="nav-link @(ViewBag.Tab == "opened"? "active": "")">Opened</a>
+        </li>
+        <li class="nav-item">
+            <a href='@Url.Action("GetTickets", "Tickets", new { sortOrder = ViewBag.CurrentSort, tab = "on_hold", currentFilter = ViewBag.CurrentFilter }, Request.Url.Scheme)' class="nav-link @(ViewBag.Tab == "on_hold"? "active": "")">On Hold</a>
+        </li>
+        <li class="nav-item">
+            <a href='@Url.Action("GetTickets", "Tickets", new { sortOrder = ViewBag.CurrentSort, tab = "closed", currentFilter = ViewBag.CurrentFilter }, Request.Url.Scheme)' class="nav-link @(ViewBag.Tab == "closed"? "active": "")">Closed</a>
         </li>
     </ul>
-</div>
-        <div class="pt-2">
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a href="@Url.Action("GetTickets", "Tickets", new {sortOrder = ViewBag.CurrentSort, tab = "", currentFilter = ViewBag.CurrentFilter }, Request.Url.Scheme)" class="nav-link @(ViewBag.Tab == ""? "active": "")">All</a>
-                </li>
-                <li class="nav-item">
-                    <a href="@Url.Action("GetTickets", "Tickets", new { sortOrder = ViewBag.CurrentSort, tab = "my_tickets", currentFilter = ViewBag.CurrentFilter }, Request.Url.Scheme)" class = "nav-link @(ViewBag.Tab == "my_tickets"? "active": "")">My tickets</a>
-                </li>
-                <li class="nav-item">
-                    <a href="@Url.Action("GetTickets", "Tickets", new { sortOrder = ViewBag.CurrentSort, tab = "unassigned", currentFilter = ViewBag.CurrentFilter }, Request.Url.Scheme)" class="nav-link @(ViewBag.Tab == "unassigned"? "active": "")">Unassigned</a>
-                </li>
-                <li class="nav-item">
-                    <a href="@Url.Action("GetTickets", "Tickets", new { sortOrder = ViewBag.CurrentSort, tab = "opened", currentFilter = ViewBag.CurrentFilter }, Request.Url.Scheme)" class="nav-link @(ViewBag.Tab == "opened"? "active": "")">Opened</a>
-                </li>
-                <li class="nav-item">
-                    <a href="@Url.Action("GetTickets", "Tickets", new { sortOrder = ViewBag.CurrentSort, tab = "on_hold", currentFilter = ViewBag.CurrentFilter }, Request.Url.Scheme)" class="nav-link @(ViewBag.Tab == "on_hold"? "active": "")">On Hold</a>
-                </li>
-                <li class="nav-item">
-                    <a href="@Url.Action("GetTickets", "Tickets", new { sortOrder = ViewBag.CurrentSort, tab = "closed", currentFilter = ViewBag.CurrentFilter }, Request.Url.Scheme)" class="nav-link @(ViewBag.Tab == "closed"? "active": "")">Closed</a>
-                </li>
-            </ul>
-            <table class="table">
-                <thead>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col" class="align-middle text-center">#</th>
+                <th scope="col" class="align-middle text-center">@Html.ActionLink("Customer Name", "GetTickets", new { sortOrder = ViewBag.CustomerName, tab = ViewBag.Tab, currentFilter = ViewBag.CurrentFilter })</th>
+                <th scope="col" class="align-middle text-center">Customer Email</th>
+                <th scope="col" class="align-middle text-center">Subject</th>
+                <th scope="col" class="align-middle text-center">Department</th>
+                <th scope="col" class="align-middle text-center">@Html.ActionLink("Ticket Status", "GetTickets", new { sortOrder = ViewBag.TicketStatus, tab = ViewBag.Tab, currentFilter = ViewBag.CurrentFilter })</th>
+                <th scope="col" colspan="2" class="align-middle text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model == null || Model.Count == 0)
+            {
+                <tr>
+                    <td colspan="7" class="align-middle text-center font-italic pt-5">There are no tickets.</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var ticket in Model)
+                {
                     <tr>
-                        <th scope="col" class="align-middle text-center">#</th>
-                        <th scope="col" class="align-middle text-center">@Html.ActionLink("Customer Name", "GetTickets", new { sortOrder = ViewBag.CustomerName, tab = ViewBag.Tab, currentFilter = ViewBag.CurrentFilter })</th>
-                        <th scope="col" class="align-middle text-center">Customer Email</th>
-                        <th scope="col" class="align-middle text-center">Subject</th>
-                        <th scope="col" class="align-middle text-center">Department</th>
-                        <th scope="col" class="align-middle text-center">@Html.ActionLink("Ticket Status", "GetTickets", new { sortOrder = ViewBag.TicketStatus, tab = ViewBag.Tab, currentFilter = ViewBag.CurrentFilter })</th>
-                        <th scope="col" colspan="2" class="align-middle text-center">Actions</th>
+                        <th scope="row" class="align-middle text-center">@ticket.TicketId</th>
+                        <td class="align-middle text-center">@ticket.CustomerName</td>
+                        <td class="align-middle text-center">@ticket.CustomerEmail</td>
+                        <td class="align-middle text-center">@ticket.Subject</td>
+                        <td class="align-middle text-center">@ticket.Department.DepartmentName</td>
+                        <td class="align-middle text-center">@ticket.Status.Status</td>
+                        <td class="align-middle text-center">@Html.ActionLink("Watch", "GetTicket", new { id = ticket.TicketId }, new { @class = "btn btn-info btn-sm" })</td>
+                        <td class="align-middle text-center" id="ticketPartial-@ticket.TicketId">
+                            @{
+                                Html.RenderPartial("TakeTicketPartial", ticket);
+                            }
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @if (Model == null || Model.Count == 0)
-                    {
-                        <tr>
-                            <td colspan="7" class="align-middle text-center font-italic pt-5">There are no tickets.</td>
-                        </tr>
-                    }
-                    else
-                    {
-                        foreach (var ticket in Model)
-                        {
-                            <tr>
-                                <th scope="row" class="align-middle text-center">@ticket.TicketId</th>
-                                <td class="align-middle text-center">@ticket.CustomerName</td>
-                                <td class="align-middle text-center">@ticket.CustomerEmail</td>
-                                <td class="align-middle text-center">@ticket.Subject</td>
-                                <td class="align-middle text-center">@ticket.Department.DepartmentName</td>
-                                <td class="align-middle text-center">@ticket.Status.Status</td>
-                                <td class="align-middle text-center">@Html.ActionLink("Watch", "GetTicket", new { id = ticket.TicketId }, new { @class = "btn btn-info btn-sm" })</td>
-                                <td class="align-middle text-center" id="ticketPartial-@ticket.TicketId">
-                                    @{
-                                        Html.RenderPartial("TakeTicketPartial", ticket);
-                                    }
-                                </td>
-                            </tr>
-                        }
-                    }
-                </tbody>
-            </table>
-        </div>
-        <br />
-        @if (Model != null && Model.Count > 0)
-        {
-            <span>Page</span> <span>@(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</span>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<br />
+@if (Model != null && Model.Count > 0)
+{
+    <span>Page</span> <span>@(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</span>
 
-            @Html.PagedListPager(Model, page => Url.Action("GetTickets",
-                new { page, sortOrder = ViewBag.CurrentSort, tab = ViewBag.Tab, currentFilter = ViewBag.CurrentFilter }))
-        }
+    @Html.PagedListPager(Model, page => Url.Action("GetTickets",
+        new { page, sortOrder = ViewBag.CurrentSort, tab = ViewBag.Tab, currentFilter = ViewBag.CurrentFilter }))
+}
