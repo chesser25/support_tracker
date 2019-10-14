@@ -44,7 +44,7 @@ namespace support_tracker.Controllers
             if (ModelState.IsValid)
             {
                 ticket.TicketHash = Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 6);
-                var ticketStatus = await ticketsStatusRepository.GetById(0);
+                var ticketStatus = await ticketsStatusRepository.GetById(1);
                 ticket.TicketStatusId = ticketStatus.TicketStatusId;
                 await ticketsRepository.Create(ticket);
                 ticketsMailer.Send(Constants_files.Constants.MAIL_HEADER, string.Format("{0} Ticket id: {1}. Ticket url: {2}", Constants_files.Constants.MAIL_SUBJECT, ticket.TicketHash, Url.Action("GetTicket", "Tickets", new { id = ticket.TicketId }, Request.Url.Scheme)), ticket.CustomerEmail);
@@ -81,7 +81,6 @@ namespace support_tracker.Controllers
             return View("TicketsList", tickets.ToPagedList(pageNumber, pageSize));
         }
 
-
         [HttpGet]
         [AllowAnonymous]
         public async Task<ActionResult> GetTicket(int id)
@@ -100,7 +99,7 @@ namespace support_tracker.Controllers
                 string userId = User.Identity.GetUserId();
                 ticket.StaffMember = await staffManager.FindByIdAsync(userId);
                 await ticketsRepository.Update(ticket);
-                return PartialView("TakeTicketPartial", ticket);
+                return PartialView("AssignTicketPartial", ticket);
             }
             return null;
         }
@@ -113,7 +112,7 @@ namespace support_tracker.Controllers
                 var ticket = await ticketsRepository.Get(id);
                 ticket.StaffMember = null;
                 await ticketsRepository.Update(ticket);
-                return PartialView("TakeTicketPartial", ticket);
+                return PartialView("AssignTicketPartial", ticket);
             }
             return null;
         }
