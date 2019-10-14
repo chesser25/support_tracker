@@ -55,7 +55,7 @@ namespace support_tracker.Controllers
 
         // Method to get tickets list by sorting, search string value and page number
         [HttpGet]
-        public ViewResult GetTickets(string sortOrder, string currentFilter, string searchString, int? page)
+        public ViewResult GetTickets(string sortOrder, string currentFilter, string searchString, string tab, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.CustomerName = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
@@ -90,6 +90,27 @@ namespace support_tracker.Controllers
                     tickets = tickets.OrderBy(t => t.CustomerName);
                     break;
             }
+
+            ViewBag.Tab = tab;
+            switch (tab)
+            {
+                case "opened":
+                    tickets = tickets.Where(t => t.Status.Status.Equals("Waiting for Staff Response") || t.Status.Status.Equals("Waiting for Customer"));
+                    break;
+                case "on_hold":
+                    tickets = tickets.Where(t => t.Status.Status.Equals("On Hold"));
+                    break;
+                case "closed":
+                    tickets = tickets.Where(t => t.Status.Status.Equals("Cancelled") || t.Status.Status.Equals("Completed"));
+                    break;
+                case "my_tickets":
+                    tickets = tickets.Where(t => t.StaffMemberId == User.Identity.GetUserId());
+                    break;
+                case "unassigned":
+                    tickets = tickets.Where(t => t.StaffMember == null);
+                    break;
+            }
+
             int pageSize = 3;
             int pageNumber = (page ?? 1);
             return View("TicketsList", tickets.ToPagedList(pageNumber, pageSize));
