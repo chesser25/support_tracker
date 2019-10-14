@@ -35,8 +35,8 @@ namespace support_tracker
 
             routes.MapRoute(
                "tickets/get",
-               url: "tickets/getAll/{sortOrder}/{searchString}",
-               defaults: new { controller = "Tickets", action = "GetTickets", sortOrder = UrlParameter.Optional, currentFilter = UrlParameter.Optional,  searchString = UrlParameter.Optional, page = UrlParameter.Optional }
+               url: "tickets/getAll/{sortOrder}/{currentFilter}/{searchString}/{tab}/{page}",
+               defaults: new { controller = "Tickets", action = "GetTickets", sortOrder = UrlParameter.Optional, currentFilter = UrlParameter.Optional,  searchString = UrlParameter.Optional, tab = UrlParameter.Optional, page = UrlParameter.Optional }
             );
 
             routes.MapRoute(
