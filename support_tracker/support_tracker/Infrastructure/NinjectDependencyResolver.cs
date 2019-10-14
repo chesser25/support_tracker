@@ -9,6 +9,7 @@ using support_tracker.DbLayer;
 using System.Web.Mvc;
 using support_tracker.Mailer;
 using support_tracker.Auth;
+using Ninject.Web.Common;
 
 namespace support_tracker.Infrastructure
 {
@@ -37,7 +38,7 @@ namespace support_tracker.Infrastructure
             kernel.Bind<IGenericRepository<Department>>().To<DepartmentsRepository<Department, DbContext>>();
             kernel.Bind<ITicketsRepository<Ticket>>().To<TicketsRepository<Ticket, DbContext>>();
             kernel.Bind<ITicketsMailer>().To<TicketsMailer>();
-            kernel.Bind<DbContext>().To<DataContext>().InThreadScope();
+            kernel.Bind<DbContext>().To<DataContext>().InSingletonScope();
             kernel.Bind<ITicketStatus<TicketStatus>>().To<TicketStatusRepository<TicketStatus, DbContext>>();
             kernel.Bind<IMessageRepository<Message>>().To<MessageRepository<Message, DbContext>>();
             kernel.Bind<AuthHelper>().ToSelf().InSingletonScope();
