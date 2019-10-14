@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using support_tracker.Abstracts;
 using support_tracker.Models;
 
@@ -19,41 +20,41 @@ namespace support_tracker.Repositories
             this.dataContext = context;
             this.dbSet = context.Set<T>();
         }
-        public virtual IEnumerable<T> GetAll()
+        public async virtual Task<IEnumerable<T>> GetAll()
         {
-            var tickets = dbSet.Include(d => d.Department).Include(s => s.Status).Include(u => u.StaffMember).Include(c => c.Messages);
+            var tickets = await dbSet.Include(d => d.Department).Include(s => s.Status).Include(u => u.StaffMember).Include(c => c.Messages).ToListAsync();
             return tickets;
         }
 
-        public virtual void Create(T item)
+        public async virtual Task Create(T item)
         {
             dbSet.Add(item);
-            dataContext.SaveChanges();
+            await dataContext.SaveChangesAsync();
         }
 
-        public virtual T Get(int id)
+        public async virtual Task<T> Get(int id)
         {
-            var ticket = dbSet.Find(id);
+            var ticket = await dbSet.FindAsync(id);
             return ticket;
         }
 
-        public virtual void Update(T ticket)
+        public async virtual Task Update(T ticket)
         {
             dbSet.Attach(ticket);
             dataContext.Entry(ticket).State = EntityState.Modified;
-            dataContext.SaveChanges();
+            await dataContext.SaveChangesAsync();
         }
 
-        public virtual IEnumerable<T> GetTicketsBySearchString(string searchString, IEnumerable<T> tickets)
+        public async virtual Task<IEnumerable<T>> GetTicketsBySearchString(string searchString, IEnumerable<T> tickets)
         {
             if (!String.IsNullOrEmpty(searchString))
             {
-                return tickets.Where(t => t.TicketHash.Contains(searchString) || t.Subject.Contains(searchString));
+                tickets = tickets.Where(t => t.TicketHash.Contains(searchString) || t.Subject.Contains(searchString));
             }
             return tickets;
         }
 
-        public virtual IEnumerable<T> GetTicketsBySort(string sortOrder, IEnumerable<T> tickets)
+        public async virtual Task<IEnumerable<T>> GetTicketsBySort(string sortOrder, IEnumerable<T> tickets)
         {
             switch (sortOrder)
             {
@@ -73,7 +74,7 @@ namespace support_tracker.Repositories
             return tickets;
         }
 
-        public virtual IEnumerable<T> GetTicketsByTab(string tab, IEnumerable<T> tickets, string userId)
+        public async virtual Task<IEnumerable<T>> GetTicketsByTab(string tab, IEnumerable<T> tickets, string userId)
         {
             switch (tab)
             {

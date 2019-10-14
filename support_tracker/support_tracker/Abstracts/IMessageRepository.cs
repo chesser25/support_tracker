@@ -1,7 +1,9 @@
-﻿namespace support_tracker.Abstracts
+﻿using System.Threading.Tasks;
+
+namespace support_tracker.Abstracts
 {
     public interface IMessageRepository<T> : IGenericRepository<T>
     {
-        void Create(T message);
+        Task Create(T message);
     }
 }

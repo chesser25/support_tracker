@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
+using System.Threading.Tasks;
 using support_tracker.Abstracts;
 using support_tracker.Models;
 
@@ -18,9 +18,9 @@ namespace support_tracker.Repositories
             this.dataContext = context;
             this.dbSet = context.Set<T>();
         }
-        public virtual IEnumerable<T> GetAll()
+        public async virtual Task<IEnumerable<T>> GetAll()
         {
-            return dbSet.ToList();
+            return await dbSet.ToListAsync();
         }
     }
 }

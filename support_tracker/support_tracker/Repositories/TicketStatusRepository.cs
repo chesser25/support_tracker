@@ -2,7 +2,7 @@
 using support_tracker.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace support_tracker.Repositories
 {
@@ -18,19 +18,14 @@ namespace support_tracker.Repositories
             this.dataContext = context;
             this.dbSet = context.Set<T>();
         }
-        public virtual IEnumerable<T> GetAll()
+        public async virtual Task<IEnumerable<T>> GetAll()
         {
-            return dbSet.ToList();
+            return await dbSet.ToListAsync();
         }
 
-        public T GetFirst()
+        public async Task<T> GetById(int id)
         {
-            return dbSet.FirstOrDefault<T>();
-        }
-
-        public T GetById(int id)
-        {
-            return dbSet.Where(t => t.TicketStatusId == id).FirstOrDefault();
+            return await dbSet.FindAsync(id);
         }
     }
 }

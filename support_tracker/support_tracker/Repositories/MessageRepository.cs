@@ -2,7 +2,7 @@
 using support_tracker.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace support_tracker.Repositories
 {
@@ -19,15 +19,15 @@ namespace support_tracker.Repositories
             this.dbSet = context.Set<T>();
         }
 
-        public void Create(T message)
+        public async Task Create(T message)
         {
             dbSet.Add(message);
-            dataContext.SaveChanges();
+            await dataContext.SaveChangesAsync();
         }
 
-        public IEnumerable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAll()
         {
-            return dbSet.ToList();
+            return await dbSet.ToListAsync();
         }
     }
 }
