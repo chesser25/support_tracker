@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace support_tracker.Controllers
 {
-    public class MessageController : Controller
+    public class MessagesController : Controller
     {
         private readonly IMessageRepository<Message> messageRepository;
         private readonly ITicketsRepository<Ticket> ticketsRepository;
         private readonly ITicketsMailer ticketsMailer;
         private readonly StaffManager staffManager;
 
-        public MessageController(IMessageRepository<Message> messageRepository, ITicketsRepository<Ticket> ticketsRepository, ITicketsMailer ticketsMailer, AuthHelper authHelper)
+        public MessagesController(IMessageRepository<Message> messageRepository, ITicketsRepository<Ticket> ticketsRepository, ITicketsMailer ticketsMailer, AuthHelper authHelper)
         {
             this.messageRepository = messageRepository;
             this.ticketsRepository = ticketsRepository;
