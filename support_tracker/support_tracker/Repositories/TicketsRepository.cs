@@ -58,19 +58,19 @@ namespace support_tracker.Repositories
         {
             switch (sortOrder)
             {
-                case "index_desc":
+                case "sort_by_index_desc":
                     tickets = tickets.OrderByDescending(t => t.TicketId);
                     break;
-                case "CustomerName":
+                case "sort_by_name":
                     tickets = tickets.OrderBy(t => t.CustomerName);
                     break;
-                case "name_desc":
+                case "sort_by_name_desc":
                     tickets = tickets.OrderByDescending(t => t.CustomerName);
                     break;
-                case "TicketStatus":
+                case "sort_by_status":
                     tickets = tickets.OrderBy(t => t.Status.Status);
                     break;
-                case "status_desc":
+                case "sort_by_status_desc":
                     tickets = tickets.OrderByDescending(t => t.Status.Status);
                     break;
                 default:

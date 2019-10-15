@@ -58,9 +58,9 @@ namespace support_tracker.Controllers
         public async Task<ViewResult> GetTickets(string sortOrder, string currentFilter, string searchString, string tab, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
-            ViewBag.SortByIndex = String.IsNullOrEmpty(sortOrder) ? "index_desc" : "";
-            ViewBag.SortByName = sortOrder == "CustomerName" ? "name_desc" : "CustomerName";
-            ViewBag.SortByStatus = sortOrder == "TicketStatus" ? "status_desc" : "TicketStatus";
+            ViewBag.SortByIndex = String.IsNullOrEmpty(sortOrder) ? "sort_by_index_desc" : "";
+            ViewBag.SortByName = sortOrder == "sort_by_name" ? "sort_by_name_desc" : "sort_by_name";
+            ViewBag.SortByStatus = sortOrder == "sort_by_status" ? "sort_by_status_desc" : "sort_by_status";
             if (searchString != null)
             {
                 page = 1;
