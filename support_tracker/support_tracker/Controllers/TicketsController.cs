@@ -72,9 +72,9 @@ namespace support_tracker.Controllers
             ViewBag.CurrentFilter = searchString;
             ViewBag.Tab = tab;
             var tickets = await ticketsRepository.GetAll();
-            tickets = await ticketsRepository.GetTicketsBySearchString(searchString, tickets);
-            tickets = await ticketsRepository.GetTicketsBySort(sortOrder, tickets);
-            tickets = await ticketsRepository.GetTicketsByTab(tab, tickets, User.Identity.GetUserId());
+            tickets = ticketsRepository.GetTicketsBySearchString(searchString, tickets);
+            tickets = ticketsRepository.GetTicketsBySort(sortOrder, tickets);
+            tickets = ticketsRepository.GetTicketsByTab(tab, tickets, User.Identity.GetUserId());
 
             int pageSize = 3;
             int pageNumber = (page ?? 1);
