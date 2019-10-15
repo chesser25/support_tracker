@@ -1,4 +1,5 @@
 ﻿@using PagedList.Mvc;
+@using System.Linq;
 @model PagedList.IPagedList<support_tracker.Models.Ticket>
 
 
@@ -61,19 +62,19 @@
             }
             else
             {
-                foreach (var ticket in Model)
+                for (int index = 0; index < Model.Count; index++)
                 {
                     <tr>
-                        <th scope="row" class="align-middle text-center">@ticket.TicketId</th>
-                        <td class="align-middle text-center">@ticket.CustomerName</td>
-                        <td class="align-middle text-center">@ticket.CustomerEmail</td>
-                        <td class="align-middle text-center">@ticket.Subject</td>
-                        <td class="align-middle text-center">@ticket.Department.DepartmentName</td>
-                        <td class="align-middle text-center">@ticket.Status.Status</td>
-                        <td class="align-middle text-center">@Html.ActionLink("Watch", "GetTicket", new { id = ticket.TicketId }, new { @class = "btn btn-info btn-sm" })</td>
-                        <td class="align-middle text-center" id="ticketPartial-@ticket.TicketId">
+                        <th scope="row" class="align-middle text-center">@(((Model.PageNumber - 1) * Model.PageSize) + index + 1)</th>
+                        <td class="align-middle text-center">@Model[index].CustomerName</td>
+                        <td class="align-middle text-center">@Model[index].CustomerEmail</td>
+                        <td class="align-middle text-center">@Model[index].Subject</td>
+                        <td class="align-middle text-center">@Model[index].Department.DepartmentName</td>
+                        <td class="align-middle text-center">@Model[index].Status.Status</td>
+                        <td class="align-middle text-center">@Html.ActionLink("Watch", "GetTicket", new { id = Model[index].TicketId }, new { @class = "btn btn-info btn-sm" })</td>
+                        <td class="align-middle text-center" id="ticketPartial-@Model[index].TicketId">
                             @{
-                                Html.RenderPartial("AssignTicketPartial", ticket);
+                                Html.RenderPartial("AssignTicketPartial", Model[index]);
                             }
                         </td>
                     </tr>
