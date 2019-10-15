@@ -9,8 +9,8 @@ namespace support_tracker.Abstracts
         Task Create(T ticket);
         Task<T> Get(int id);
         Task Update(T ticket);
-        Task<IEnumerable<T>> GetTicketsBySearchString(string searchString, IEnumerable<T> tickets);
-        Task<IEnumerable<T>> GetTicketsBySort(string sortOrder, IEnumerable<T> tickets);
-        Task<IEnumerable<T>> GetTicketsByTab(string tab, IEnumerable<T> tickets, string userId);
+        IEnumerable<T> GetTicketsBySearchString(string searchString, IEnumerable<T> tickets);
+        IEnumerable<T> GetTicketsBySort(string sortOrder, IEnumerable<T> tickets);
+        IEnumerable<T> GetTicketsByTab(string tab, IEnumerable<T> tickets, string userId);
     }
 }

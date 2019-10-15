@@ -45,7 +45,7 @@ namespace support_tracker.Repositories
             await dataContext.SaveChangesAsync();
         }
 
-        public async virtual Task<IEnumerable<T>> GetTicketsBySearchString(string searchString, IEnumerable<T> tickets)
+        public virtual IEnumerable<T> GetTicketsBySearchString(string searchString, IEnumerable<T> tickets)
         {
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -54,7 +54,7 @@ namespace support_tracker.Repositories
             return tickets;
         }
 
-        public async virtual Task<IEnumerable<T>> GetTicketsBySort(string sortOrder, IEnumerable<T> tickets)
+        public virtual IEnumerable<T> GetTicketsBySort(string sortOrder, IEnumerable<T> tickets)
         {
             switch (sortOrder)
             {
@@ -74,7 +74,7 @@ namespace support_tracker.Repositories
             return tickets;
         }
 
-        public async virtual Task<IEnumerable<T>> GetTicketsByTab(string tab, IEnumerable<T> tickets, string userId)
+        public virtual IEnumerable<T> GetTicketsByTab(string tab, IEnumerable<T> tickets, string userId)
         {
             switch (tab)
             {
