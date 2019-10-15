@@ -44,12 +44,12 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col" class="align-middle text-center">#</th>
-                <th scope="col" class="align-middle text-center">@Html.ActionLink("Customer Name", "GetTickets", new { sortOrder = ViewBag.CustomerName, tab = ViewBag.Tab, currentFilter = ViewBag.CurrentFilter })</th>
+                <th scope="col" class="align-middle text-center">@Html.ActionLink("#", "GetTickets", new { sortOrder = ViewBag.SortByIndex, tab = ViewBag.Tab, currentFilter = ViewBag.CurrentFilter })</th>
+                <th scope="col" class="align-middle text-center">@Html.ActionLink("Customer Name", "GetTickets", new { sortOrder = ViewBag.SortByName, tab = ViewBag.Tab, currentFilter = ViewBag.CurrentFilter })</th>
                 <th scope="col" class="align-middle text-center">Customer Email</th>
                 <th scope="col" class="align-middle text-center">Subject</th>
                 <th scope="col" class="align-middle text-center">Department</th>
-                <th scope="col" class="align-middle text-center">@Html.ActionLink("Ticket Status", "GetTickets", new { sortOrder = ViewBag.TicketStatus, tab = ViewBag.Tab, currentFilter = ViewBag.CurrentFilter })</th>
+                <th scope="col" class="align-middle text-center">@Html.ActionLink("Ticket Status", "GetTickets", new { sortOrder = ViewBag.SortByStatus, tab = ViewBag.Tab, currentFilter = ViewBag.CurrentFilter })</th>
                 <th scope="col" colspan="2" class="align-middle text-center">Actions</th>
             </tr>
         </thead>
@@ -62,19 +62,19 @@
             }
             else
             {
-                for (int index = 0; index < Model.Count; index++)
+                foreach (var ticket in Model)
                 {
                     <tr>
-                        <th scope="row" class="align-middle text-center">@(((Model.PageNumber - 1) * Model.PageSize) + index + 1)</th>
-                        <td class="align-middle text-center">@Model[index].CustomerName</td>
-                        <td class="align-middle text-center">@Model[index].CustomerEmail</td>
-                        <td class="align-middle text-center">@Model[index].Subject</td>
-                        <td class="align-middle text-center">@Model[index].Department.DepartmentName</td>
-                        <td class="align-middle text-center">@Model[index].Status.Status</td>
-                        <td class="align-middle text-center">@Html.ActionLink("Watch", "GetTicket", new { id = Model[index].TicketId }, new { @class = "btn btn-info btn-sm" })</td>
-                        <td class="align-middle text-center" id="ticketPartial-@Model[index].TicketId">
+                        <th scope="row" class="align-middle text-center">@ticket.TicketId</th>
+                        <td class="align-middle text-center">@ticket.CustomerName</td>
+                        <td class="align-middle text-center">@ticket.CustomerEmail</td>
+                        <td class="align-middle text-center">@ticket.Subject</td>
+                        <td class="align-middle text-center">@ticket.Department.DepartmentName</td>
+                        <td class="align-middle text-center">@ticket.Status.Status</td>
+                        <td class="align-middle text-center">@Html.ActionLink("Watch", "GetTicket", new { id = ticket.TicketId }, new { @class = "btn btn-info btn-sm" })</td>
+                        <td class="align-middle text-center" id="ticketPartial-@ticket.TicketId">
                             @{
-                                Html.RenderPartial("AssignTicketPartial", Model[index]);
+                                Html.RenderPartial("AssignTicketPartial", ticket);
                             }
                         </td>
                     </tr>

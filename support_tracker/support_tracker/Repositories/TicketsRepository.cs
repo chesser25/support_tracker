@@ -58,6 +58,12 @@ namespace support_tracker.Repositories
         {
             switch (sortOrder)
             {
+                case "index_desc":
+                    tickets = tickets.OrderByDescending(t => t.TicketId);
+                    break;
+                case "CustomerName":
+                    tickets = tickets.OrderBy(t => t.CustomerName);
+                    break;
                 case "name_desc":
                     tickets = tickets.OrderByDescending(t => t.CustomerName);
                     break;
@@ -68,7 +74,7 @@ namespace support_tracker.Repositories
                     tickets = tickets.OrderByDescending(t => t.Status.Status);
                     break;
                 default:
-                    tickets = tickets.OrderBy(t => t.CustomerName);
+                    tickets = tickets.OrderBy(t => t.TicketId);
                     break;
             }
             return tickets;
